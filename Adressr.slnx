@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Adressr.Library/Adressr.Library.csproj" />
+  <Project Path="AdressrNET/AdressrNET.csproj" />
+</Solution>

@@ -25,3 +25,13 @@ replay_pid*
 
 # workflow stuff that needs ignoring.
 mavenbuild.yml
+
+#Ignore private files
+appsettings.*
+launchSettings.json
+
+#Ignore VS stuff.
+.vs/
+
+#Ignore some VS stuff again
+obj/
