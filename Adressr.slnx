@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="Adressr.Data/Adressr.Data.csproj" Id="4bcaf8c3-c1c3-4872-ac4f-676eb8fd3bf3" />
   <Project Path="Adressr.Library/Adressr.Library.csproj" />
   <Project Path="AdressrNET/AdressrNET.csproj" />
 </Solution>
