@@ -23,8 +23,9 @@
 hs_err_pid*
 replay_pid*
 
-# workflow stuff that needs ignoring.
+# workflow stuff that needs ignoring for now.
 mavenbuild.yml
+socketdev.yml
 
 #Ignore private files
 appsettings.*
