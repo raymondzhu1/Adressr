@@ -12,6 +12,6 @@
 
         public string WageType { get; set; }
 
-        public List<ISkill> Skills { get; set; }
+        public List<ISkill>? Skills { get; set; }
     }
 }
