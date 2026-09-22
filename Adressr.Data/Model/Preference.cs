@@ -16,6 +16,6 @@ namespace Adressr.Data.Model
         [Required]
         public int UserID { get; set; }
 
-        public User TheUser { get; set; }
+        public required User TheUser { get; set; }
     }
 }

@@ -18,6 +18,6 @@ namespace Adressr.Data.Model
         [Required]
         public DateTime CreationDate { get; set; }
 
-        public Preference Preference { get; set; }
+        public required Preference Preference { get; set; }
     }
 }
