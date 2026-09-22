@@ -14,6 +14,7 @@ namespace Adressr.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().HasIndex(x => x.Username).IsUnique();
             modelBuilder.Entity<User>().HasOne(x => x.Preference).WithOne(x => x.TheUser).HasForeignKey<Preference>(x => x.UserID);
         }
     }
