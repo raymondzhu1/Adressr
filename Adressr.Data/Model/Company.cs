@@ -8,6 +8,6 @@ namespace Adressr.Data.Model
 
         public required string Name { get; set; }
 
-        public Position? Position { get; set; }
+        public ICollection<Position> Position { get; set; } = new List<Position>();
     }
 }

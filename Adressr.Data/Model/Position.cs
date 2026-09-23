@@ -4,11 +4,7 @@ namespace Adressr.Data.Model
 {
     public class Position : IPosition
     {
-        public int ProfileID { get; set; }
-
-        public int NumInCompany { get; set; }
-
-        public int PotentialNumInCompany { get; set; }
+        public int PositionID { get; set; }
 
         public required string Title { get; set; }
 

@@ -8,7 +8,7 @@ namespace Adressr.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Position> builder)
         {
-            builder.HasKey(x => x.ProfileID);
+            builder.HasKey(x => x.PositionID);
 
             builder.Property(x => x.Title).IsRequired().HasMaxLength(40);
 
@@ -16,7 +16,7 @@ namespace Adressr.Data.Configurations
 
             builder.Property(x => x.Summary).IsRequired().HasMaxLength(200);
 
-            builder.HasOne(x => x.Company).WithOne(x => x.Position).HasForeignKey<Position>(x => x.CompanyID);
+            builder.HasOne(x => x.Company).WithMany(x => x.Position).HasForeignKey(x => x.CompanyID).IsRequired();
         }
     }
 }
