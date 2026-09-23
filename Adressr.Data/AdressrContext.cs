@@ -7,6 +7,8 @@ namespace Adressr.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Preference> Preferences { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
+
         public AdressrContext(DbContextOptions<AdressrContext> option) : base(option)
         {
 
@@ -14,8 +16,11 @@ namespace Adressr.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasIndex(x => x.Username).IsUnique();
-            modelBuilder.Entity<User>().HasOne(x => x.Preference).WithOne(x => x.TheUser).HasForeignKey<Preference>(x => x.UserID);
+            //modelBuilder.Entity<User>().HasIndex(x => x.Username).IsUnique();
+            //modelBuilder.Entity<User>().HasOne(x => x.Preference).WithOne(x => x.User).HasForeignKey<Preference>(x => x.UserID);
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AdressrContext).Assembly);
         }
     }
 }
