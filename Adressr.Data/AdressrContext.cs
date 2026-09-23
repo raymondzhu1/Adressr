@@ -18,6 +18,7 @@ namespace Adressr.Data
         {
             //modelBuilder.Entity<User>().HasIndex(x => x.Username).IsUnique();
             //modelBuilder.Entity<User>().HasOne(x => x.Preference).WithOne(x => x.User).HasForeignKey<Preference>(x => x.UserID);
+            //testing if GitHub is fixed again.
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AdressrContext).Assembly);
