@@ -16,7 +16,7 @@ namespace Adressr.Data.Configurations
 
             builder.Property(x => x.Summary).IsRequired().HasMaxLength(200);
 
-            builder.HasOne(x => x.Company).WithMany(x => x.Position).HasForeignKey(x => x.CompanyID).IsRequired();
+            builder.HasOne(x => x.Company).WithMany(x => x.Positions).HasForeignKey(x => x.CompanyID).IsRequired();
         }
     }
 }

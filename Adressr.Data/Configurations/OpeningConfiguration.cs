@@ -14,7 +14,9 @@ namespace Adressr.Data.Configurations
 
             builder.Property(x => x.Description).IsRequired();
 
-            builder.HasOne(x => x.Company).WithMany(x => x.Opening).HasForeignKey(x => x.CompanyID).IsRequired();
+            builder.Property(x => x.Wage).HasPrecision(15, 2);
+
+            builder.HasOne(x => x.Company).WithMany(x => x.Openings).HasForeignKey(x => x.CompanyID).IsRequired();
         }
     }
 }
