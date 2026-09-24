@@ -8,6 +8,10 @@ namespace Adressr.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Preference> Preferences { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<Position> Positions { get; set; }
+        public DbSet<Opening> Openings { get; set; }
+        public DbSet<Experience> Experiences { get; set; }
 
         public AdressrContext(DbContextOptions<AdressrContext> option) : base(option)
         {
@@ -16,9 +20,6 @@ namespace Adressr.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<User>().HasIndex(x => x.Username).IsUnique();
-            //modelBuilder.Entity<User>().HasOne(x => x.Preference).WithOne(x => x.User).HasForeignKey<Preference>(x => x.UserID);
-            //testing if GitHub is fixed again.
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AdressrContext).Assembly);

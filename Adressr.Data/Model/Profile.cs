@@ -15,5 +15,7 @@ namespace Adressr.Data.Model
         public int UserID { get; set; }
 
         public User User { get; set; } = null!;
+
+        public ICollection<Experience> Experiences { get; set; } = new List<Experience>();
     }
 }

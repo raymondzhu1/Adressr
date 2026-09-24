@@ -12,6 +12,8 @@ namespace Adressr.Data.Configurations
 
             builder.Property(x => x.Username).IsRequired().HasMaxLength(30);
 
+            builder.HasIndex(x => x.Username).IsUnique();
+
             builder.Property(x => x.Password).IsRequired().HasColumnType("VARCHAR(255)");
         }
     }
