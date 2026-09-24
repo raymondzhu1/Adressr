@@ -1,20 +1,22 @@
 ﻿using Adressr.Library.Enums;
 using Adressr.Library.Interfaces;
 
-namespace Adressr.Library.Models
+namespace Adressr.Data.Model
 {
     public class Opening : IOpening
     {
+        public int OpeningID { get; set; }
+
         public required string Name { get; set; }
 
         public required string Description { get; set; }
 
-        public List<ISkill>? Skills { get; set; }
-
-        public int NumberOfOpenings { get; set; }
-
         public decimal Wage { get; set; }
 
         public required WageType WageType { get; set; }
+
+        public int CompanyID { get; set; }
+
+        public Company Company { get; set; } = null!;
     }
 }

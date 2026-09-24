@@ -1,4 +1,6 @@
-﻿namespace Adressr.Library.Interfaces
+﻿using Adressr.Library.Enums;
+
+namespace Adressr.Library.Interfaces
 {
     public interface IOpening : IModel
     {
@@ -6,12 +8,8 @@
 
         public string Description { get; set; }
 
-        public int NumberOfOpenings { get; set; }
+        public decimal Wage { get; set; }
 
-        public float Wage { get; set; }
-
-        public string WageType { get; set; }
-
-        public List<ISkill>? Skills { get; set; }
+        public WageType WageType { get; set; }
     }
 }

@@ -9,5 +9,7 @@ namespace Adressr.Data.Model
         public required string Name { get; set; }
 
         public ICollection<Position> Position { get; set; } = new List<Position>();
+
+        public ICollection<Opening> Opening { get; set; } = new List<Opening>();
     }
 }
