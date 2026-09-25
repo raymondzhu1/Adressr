@@ -12,6 +12,8 @@ namespace Adressr.Data
         public DbSet<Position> Positions { get; set; }
         public DbSet<Opening> Openings { get; set; }
         public DbSet<Experience> Experiences { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<Model.Task> Tasks { get; set; }
 
         public AdressrContext(DbContextOptions<AdressrContext> option) : base(option)
         {

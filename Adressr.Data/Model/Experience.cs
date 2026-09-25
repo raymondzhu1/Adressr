@@ -21,5 +21,7 @@ namespace Adressr.Data.Model
         public int ProfileID { get; set; }
 
         public Profile Profile { get; set; } = null!;
+
+        public ICollection<Task> Tasks { get; set; } = new List<Task>();
     }
 }

@@ -18,5 +18,7 @@ namespace Adressr.Data.Model
         public int CompanyID { get; set; }
 
         public Company Company { get; set; } = null!;
+
+        public ICollection<Skill> Skills { get; set; } = new List<Skill>();
     }
 }

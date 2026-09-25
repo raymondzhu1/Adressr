@@ -16,7 +16,9 @@ namespace Adressr.Data.Configurations
 
             builder.Property(x => x.Wage).HasPrecision(15, 2);
 
-            builder.HasOne(x => x.Company).WithMany(x => x.Openings).HasForeignKey(x => x.CompanyID).IsRequired();
+            builder.HasOne(x => x.Company).WithMany(c => c.Openings).HasForeignKey(x => x.CompanyID).IsRequired();
+
+            builder.HasMany(x => x.Skills).WithMany(s => s.Openings).UsingEntity(e => e.ToTable("OpeningSkills"));
         }
     }
 }

@@ -7,5 +7,7 @@ namespace Adressr.Data.Model
         public int SkillID { get; set; }
 
         public required string Name { get; set; }
+
+        public ICollection<Opening> Openings { get; set; } = new List<Opening>();
     }
 }
