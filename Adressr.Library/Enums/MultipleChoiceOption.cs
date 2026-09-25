@@ -1,6 +1,6 @@
 ﻿namespace Adressr.Library.Enums
 {
-    public enum MultipleChoiceAnswers
+    public enum MultipleChoiceOption
     {
         A = 0,
         B = 1,

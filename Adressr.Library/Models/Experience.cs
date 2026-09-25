@@ -16,8 +16,8 @@ namespace Adressr.Library.Models
 
         public DateTime[] Tenure { get; set; } = new DateTime[2];
 
-        public List<ITask>? PreviousTasks { get; set; }
+        public List<IWorkTask>? PreviousTasks { get; set; }
 
-        public ITask? CurrentTask { get; set; }
+        public IWorkTask? CurrentTask { get; set; }
     }
 }

@@ -1,16 +1,17 @@
 ﻿using Adressr.Library.Interfaces;
 
-namespace Adressr.Library.Models
+namespace Adressr.Data.Model
 {
     public class Exam : IExam
     {
+        public int ExamID { get; set; }
+
         public required string Title { get; set; }
-        public required List<IQuestion> Questions { get; set; }
 
         public TimeSpan TimeLimit { get; set; }
 
         public bool Private { get; set; }
 
-        public List<IUser>? Participants { get; set; }
+        public ICollection<Question> Questions { get; set; } = new List<Question>();
     }
 }

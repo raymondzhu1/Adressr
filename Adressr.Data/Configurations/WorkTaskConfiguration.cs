@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Adressr.Data.Configurations
 {
-    public class TaskConfiguration : IEntityTypeConfiguration<Model.Task>
+    public class WorkTaskConfiguration : IEntityTypeConfiguration<Model.WorkTask>
     {
-        public void Configure(EntityTypeBuilder<Model.Task> builder)
+        public void Configure(EntityTypeBuilder<Model.WorkTask> builder)
         {
-            builder.HasKey(t => t.TaskID);
+            builder.HasKey(t => t.WorkTaskID);
 
             builder.Property(t => t.Description).IsRequired().HasMaxLength(1000);
 

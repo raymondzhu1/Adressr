@@ -8,9 +8,5 @@ namespace Adressr.Library.Models
         public required string Description { get; set; }
 
         public AnswerType AnswerType { get; set; }
-
-        public string? OpenResponseAnswer { get; set; }
-
-        public MultipleChoiceAnswers? MultipleChoiceAnswer { get; set; }
     }
 }

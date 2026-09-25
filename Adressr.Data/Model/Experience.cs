@@ -22,6 +22,8 @@ namespace Adressr.Data.Model
 
         public Profile Profile { get; set; } = null!;
 
-        public ICollection<Task> Tasks { get; set; } = new List<Task>();
+        public ICollection<WorkTask> Tasks { get; set; } = new List<WorkTask>();
+
+        public ICollection<Skill> Skills { get; set; } = new List<Skill>(); 
     }
 }

@@ -16,7 +16,9 @@ namespace Adressr.Data.Configurations
 
             builder.Property(x => x.Description).IsRequired();
 
-            builder.HasOne(x => x.Profile).WithMany(x => x.Experiences).HasForeignKey(x => x.ProfileID);
+            builder.HasOne(x => x.Profile).WithMany(p => p.Experiences).HasForeignKey(x => x.ProfileID);
+
+            builder.HasMany(x => x.Skills).WithMany(s => s.Experiences).UsingEntity(e => e.ToTable("ExperienceSkills"));
         }
     }
 }

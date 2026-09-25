@@ -11,5 +11,7 @@ namespace Adressr.Data.Model
 
         public Preference? Preference { get; set; }
         public Profile? Profile { get; set; }
+        public ICollection<Position> Positions { get; set; } = new List<Position>();
+        public ICollection<ExamAttempt> ExamAttempts { get; set; } = new List<ExamAttempt>();
     }
 }

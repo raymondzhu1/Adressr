@@ -9,5 +9,7 @@ namespace Adressr.Data.Model
         public required string Name { get; set; }
 
         public ICollection<Opening> Openings { get; set; } = new List<Opening>();
+
+        public ICollection<Experience> Experiences { get; set; } = new List<Experience>();
     }
 }
