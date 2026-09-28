@@ -13,5 +13,6 @@ namespace Adressr.Data.Model
         public bool Private { get; set; }
 
         public ICollection<Question> Questions { get; set; } = new List<Question>();
+        public ICollection<User> PrivateExamParticipants = new List<User>();
     }
 }

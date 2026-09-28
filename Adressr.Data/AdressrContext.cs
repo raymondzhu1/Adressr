@@ -9,11 +9,14 @@ namespace Adressr.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Preference> Preferences { get; set; }
         public DbSet<Profile> Profiles { get; set; }
+        public DbSet<ProfileInterest> ProfileInterests { get; set; }
+        public DbSet<ProfileHobby> ProfileHobbies { get; set; }
 
         //Stuff related to companies
         public DbSet<Company> Companies { get; set; }
         public DbSet<Position> Positions { get; set; }
         public DbSet<Opening> Openings { get; set; }
+        public DbSet<PlainTextEmployee> PlainTextEmployees { get; set; }
 
         //A bit of both of the above.
         public DbSet<Experience> Experiences { get; set; }

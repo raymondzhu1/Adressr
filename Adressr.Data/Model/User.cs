@@ -13,5 +13,6 @@ namespace Adressr.Data.Model
         public Profile? Profile { get; set; }
         public ICollection<Position> Positions { get; set; } = new List<Position>();
         public ICollection<ExamAttempt> ExamAttempts { get; set; } = new List<ExamAttempt>();
+        public ICollection<Exam> PrivateExams { get; set; } = new List<Exam>();
     }
 }

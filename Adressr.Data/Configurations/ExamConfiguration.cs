@@ -11,6 +11,8 @@ namespace Adressr.Data.Configurations
             builder.HasKey(exam => exam.ExamID);
 
             builder.Property(exam => exam.Title).IsRequired().HasMaxLength(50);
+
+            builder.HasMany(exam => exam.PrivateExamParticipants).WithMany(u => u.PrivateExams).UsingEntity(e => e.ToTable("PrivateExamParticipants"));
         }
     }
 }
