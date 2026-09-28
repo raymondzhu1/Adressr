@@ -11,8 +11,11 @@ namespace Adressr.Data.Model
 
         public Preference? Preference { get; set; }
         public Profile? Profile { get; set; }
+        public ICollection<OpeningApplicants> OpeningsApplied { get; set; } = new List<OpeningApplicants>();
+        public ICollection<Company>? Companies { get; set; }
         public ICollection<Position> Positions { get; set; } = new List<Position>();
         public ICollection<ExamAttempt> ExamAttempts { get; set; } = new List<ExamAttempt>();
         public ICollection<Exam> PrivateExams { get; set; } = new List<Exam>();
+        public ICollection<Exam> CreatedExams { get; set; } = new List<Exam>();
     }
 }

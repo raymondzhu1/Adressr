@@ -19,6 +19,12 @@ namespace Adressr.Data.Model
 
         public Company Company { get; set; } = null!;
 
+        public int PositionID { get; set; }
+
+        public Position Position { get; set; } = null!;
+
+        public ICollection<OpeningApplicants> OpeningApplicants { get; set; } = new List<OpeningApplicants>();
+
         public ICollection<Skill> Skills { get; set; } = new List<Skill>();
     }
 }

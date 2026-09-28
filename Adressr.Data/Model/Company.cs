@@ -8,6 +8,9 @@ namespace Adressr.Data.Model
 
         public required string Name { get; set; }
 
+        public int CreatorID { get; set; }
+        public User Creator { get; set; } = null!;
+
         public ICollection<Position> Positions { get; set; } = new List<Position>();
 
         public ICollection<Opening> Openings { get; set; } = new List<Opening>();

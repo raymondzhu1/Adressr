@@ -10,7 +10,7 @@ namespace Adressr.Data.Configurations
         {
             builder.HasKey(SA => SA.SubmittedAnswerID);
 
-            builder.HasOne(SA => SA.Question).WithMany().HasForeignKey(SA => SA.QuestionID).IsRequired();
+            builder.HasOne(SA => SA.Question).WithMany().HasForeignKey(SA => SA.QuestionID).IsRequired().OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(SA => SA.ExamAttempt).WithMany(attempt => attempt.SubmittedAnswers).HasForeignKey(SA => SA.ExamAttemptID).IsRequired();
 

@@ -15,7 +15,9 @@ namespace Adressr.Data
         //Stuff related to companies
         public DbSet<Company> Companies { get; set; }
         public DbSet<Position> Positions { get; set; }
+        public DbSet<PositionPreference> PositionPreferences { get; set; }
         public DbSet<Opening> Openings { get; set; }
+        public DbSet<OpeningApplicants> OpeningApplicants { get; set; }
         public DbSet<PlainTextEmployee> PlainTextEmployees { get; set; }
 
         //A bit of both of the above.

@@ -12,6 +12,8 @@ namespace Adressr.Data.Configurations
 
             builder.Property(exam => exam.Title).IsRequired().HasMaxLength(50);
 
+            builder.HasOne(exam => exam.Creator).WithMany(user => user.CreatedExams).HasForeignKey(exam => exam.CreatorID).OnDelete(DeleteBehavior.Restrict);
+
             builder.HasMany(exam => exam.PrivateExamParticipants).WithMany(u => u.PrivateExams).UsingEntity(e => e.ToTable("PrivateExamParticipants"));
         }
     }

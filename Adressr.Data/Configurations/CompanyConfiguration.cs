@@ -11,6 +11,8 @@ namespace Adressr.Data.Configurations
             builder.HasKey(x => x.CompanyID);
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(30);
+
+            builder.HasOne(x => x.Creator).WithMany(u => u.Companies).HasForeignKey(x => x.CreatorID).IsRequired();
         }
     }
 }
