@@ -17,5 +17,7 @@ namespace Adressr.Data.Model
         public User User { get; set; } = null!;
 
         public ICollection<Experience> Experiences { get; set; } = new List<Experience>();
+        public ICollection<ProfileInterest> Interests { get; set; } = new List<ProfileInterest>();
+        public ICollection<ProfileHobby> Hobbies { get; set; } = new List<ProfileHobby>();
     }
 }
