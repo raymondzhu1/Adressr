@@ -15,6 +15,8 @@ namespace Adressr.Data.Model
 
         public required WageType WageType { get; set; }
 
+        public int NumberOfOpenings { get; set; }
+
         public int CompanyID { get; set; }
 
         public Company Company { get; set; } = null!;

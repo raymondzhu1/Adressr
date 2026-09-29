@@ -7,6 +7,7 @@ namespace Adressr.Data.Model
         public int UserID { get; set; }
         public required string Username { get; set; }
         public required string Password { get; set; }
+        public required string Email { get; set; }
         public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
         public Preference? Preference { get; set; }

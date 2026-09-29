@@ -10,6 +10,8 @@ namespace Adressr.Data.Model
 
         public TimeSpan TimeLimit { get; set; }
 
+        public int? MaxRetakes { get; set; } //nullable to allow infinite retakes when this is set to null. 0 = one single attempt allowed. Attempts allowed = MaxRetakes + 1.
+
         public bool Private { get; set; }
 
         public int CreatorID { get; set; }

@@ -16,11 +16,13 @@ namespace Adressr.Data.Configurations
 
             builder.Property(x => x.Wage).HasPrecision(15, 2);
 
+            builder.ToTable(table => table.HasCheckConstraint("CK_Opening_NumberOfOpenings_NonNegative", "[NumberOfOpenings] >= 0"));
+
             builder.HasOne(x => x.Company).WithMany(c => c.Openings).HasForeignKey(x => x.CompanyID).IsRequired();
 
             builder.HasMany(x => x.Skills).WithMany(s => s.Openings).UsingEntity(e => e.ToTable("OpeningSkills"));
 
-            builder.HasOne(x => x.Position).WithMany(p  => p.Openings).HasForeignKey(x => x.PositionID).IsRequired();
+            builder.HasOne(x => x.Position).WithMany(p => p.Openings).HasForeignKey(x => new { x.PositionID, x.CompanyID }).HasPrincipalKey(p => new { p.PositionID, p.CompanyID }).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

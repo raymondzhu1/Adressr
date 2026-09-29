@@ -10,6 +10,8 @@ namespace Adressr.Data.Configurations
         {
             builder.HasKey(x => x.PositionID);
 
+            builder.HasAlternateKey(x => new { x.PositionID, x.CompanyID });
+
             builder.Property(x => x.Title).IsRequired().HasMaxLength(40);
 
             builder.Property(x => x.Description).IsRequired();
