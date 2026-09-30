@@ -1,12 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Adressr.Data.Repository.Interface;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AdressrNET.Controllers
 {
-    public class CompanyController : Controller
+    public class CompanyController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly ICompanyRepository _companyRepository;
+
+        public CompanyController(ICompanyRepository companyRepository)
         {
-            return View();
+            _companyRepository = companyRepository;
         }
+
+        
     }
 }

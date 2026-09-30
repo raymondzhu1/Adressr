@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Adressr.Data;
+using Adressr.Data.Repository.Interface;
+using Adressr.Data.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,8 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddDbContext<AdressrContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 
 var app = builder.Build();
 
