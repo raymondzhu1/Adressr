@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adressr.Data\Adressr.Data.csproj" />
+    <ProjectReference Include="..\Adressr.Library\Adressr.Library.csproj" />
+  </ItemGroup>
+
 </Project>
