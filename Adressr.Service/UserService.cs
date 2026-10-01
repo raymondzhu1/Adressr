@@ -74,9 +74,22 @@ namespace Adressr.Service
 
             Dictionary<string, int> parameters = parts[2].Split(',').Select(pars => pars.Split('=')).ToDictionary(ParamAndValues => ParamAndValues[0], ParamAndValues => int.Parse(ParamAndValues[1]));
 
-            if (parameters.Count != 3 || !parameters.ContainsKey("m") || !parameters.ContainsKey("t") || !parameters.ContainsKey("p"))
+            if (parameters.Count != 3)
             {
-                throw new FormatException("PHC string messed up the cost parameters.");
+                throw new FormatException("PHC string missing one of the cost parameters.");
+            }
+
+            if(!parameters.TryGetValue("m", out int memsizekib))
+            {
+                throw new FormatException("PHC string missing the m value.");
+            }
+            if(!parameters.TryGetValue("t", out int iterations))
+            {
+                throw new FormatException("PHC string missing the t value.");
+            }
+            if(!parameters.TryGetValue("p", out int parallelism))
+            {
+                throw new FormatException("PHC string missing the p value");
             }
 
             string[] versionParts = parts[1].Split('=');
@@ -93,9 +106,9 @@ namespace Adressr.Service
             {
                 Salt = PassTheSalt,
                 Argon2idHash = PassTheHash,
-                MemorySizeKiB = parameters["m"],
-                Iterations = parameters["t"],
-                DegreeOfParallelism = parameters["p"],
+                MemorySizeKiB = memsizekib,
+                Iterations = iterations,
+                DegreeOfParallelism = parallelism,
                 Argon2Type = parts[0],
                 Argon2Version = int.Parse(versionParts[1])
             };
