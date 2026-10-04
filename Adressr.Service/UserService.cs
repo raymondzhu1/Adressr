@@ -1,5 +1,6 @@
 ﻿using Adressr.Data.Repository.Interface;
 using Adressr.Library.Models;
+using Adressr.Library.CustomExceptions;
 using Adressr.Data.Model;
 using Konscious.Security.Cryptography;
 using System.Security.Cryptography;
@@ -136,12 +137,12 @@ namespace Adressr.Service
         {
             if(await _userRepository.GetByUsernameAsync(request.Username) != null)
             {
-                //throw some exception for existing user. otherwise keep going.
+                throw new UsernameExistsException(request.Username);
             }
 
             if (await _userRepository.GetByEmailAsync(request.Email) != null)
             {
-                //throw some exception for user existing in this email.
+                throw new UsernameExistsException(request.Email);
             }
 
             byte[] salt = GenerateSaltValue(SaltSize);
