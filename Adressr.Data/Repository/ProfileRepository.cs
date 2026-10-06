@@ -1,4 +1,6 @@
-﻿using Adressr.Data.Repository.Interface;
+﻿using Adressr.Data.Model;
+using Adressr.Data.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace Adressr.Data.Repository
 {
@@ -11,6 +13,21 @@ namespace Adressr.Data.Repository
             _context = context;
         }
 
+        public Task AddProfileAsync(Profile profile)
+        {
+            _context.Profiles.Add(profile);
+            return Task.CompletedTask;
+        }
 
+        public Task UpdateProfileAsync(Profile profile)
+        {
+            _context.Profiles.Update(profile);
+            return Task.CompletedTask;
+        }
+
+        public Task<Profile?> GetByUserIdAsync(int userId)
+        {
+            return _context.Profiles.SingleOrDefaultAsync(profile => profile.UserID == userId);
+        }
     }
 }

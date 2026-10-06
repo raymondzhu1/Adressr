@@ -14,6 +14,7 @@ namespace Adressr.Service
         private readonly IUserRepository _userRepository;
         private readonly IPreferenceRepository _preferenceRepository;
         private readonly IRepositorySaver _repositorySaver;
+        private readonly IProfileRepository _profileRepository;
         private const int SaltSize = 16;
         private const int HashSize = 16;
         private const int DegreeOfParallelism = 1;
@@ -24,11 +25,12 @@ namespace Adressr.Service
             ["argon2id"] = new HashSet<int> { 19 }
         };
 
-        public UserService(IUserRepository userRepository, IPreferenceRepository preferenceRepository, IRepositorySaver repositorySaver)
+        public UserService(IUserRepository userRepository, IPreferenceRepository preferenceRepository, IRepositorySaver repositorySaver, IProfileRepository profileRepository)
         {
             _userRepository = userRepository;
             _preferenceRepository = preferenceRepository;
             _repositorySaver = repositorySaver;
+            _profileRepository = profileRepository;
         }
 
         private static byte[] GenerateSaltValue(int size)
@@ -166,7 +168,18 @@ namespace Adressr.Service
             Preference preference = new Preference { User = user, DarkMode = false, ProfilePrivate = false };
             await _preferenceRepository.AddAsync(preference);
 
-            //add profile creation after this as well.
+            string defaultEducation = "Edit education here.";
+            string defaultProfilePicLocation = "/profileimages/default-profilepic.png";
+            
+            Profile profile = new Profile
+            {
+                User = user,
+                Name = request.Name,
+                Education = request.Education ?? defaultEducation,
+                ProfilePicLocation = defaultProfilePicLocation
+            };
+
+            await _profileRepository.AddProfileAsync(profile);
 
             await _repositorySaver.SaveChangesAsync();
 
@@ -180,9 +193,9 @@ namespace Adressr.Service
             return result;
         }
 
-        public async Task<bool> VerifyIdentityAsync(string SomeIdentifier, string InputtedPassword)
+        public async Task<bool> VerifyIdentityAsync(string someIdentifier, string inputtedPassword)
         {
-            User? user = await _userRepository.GetByUsernameOrEmailAsync(SomeIdentifier);
+            User? user = await _userRepository.GetByUsernameOrEmailAsync(someIdentifier);
             if(user == null)
             {
                 return false;
@@ -194,7 +207,7 @@ namespace Adressr.Service
                 //throw some exception saying this type and version ain't supported here.
             }
 
-            byte[] UserLoginAttemptHash = ComputeArgon2idHash(InputtedPassword, ParsedResults.Salt, ParsedResults.DegreeOfParallelism, ParsedResults.Iterations, ParsedResults.MemorySizeKiB);
+            byte[] UserLoginAttemptHash = ComputeArgon2idHash(inputtedPassword, ParsedResults.Salt, ParsedResults.DegreeOfParallelism, ParsedResults.Iterations, ParsedResults.MemorySizeKiB);
             return CryptographicOperations.FixedTimeEquals(UserLoginAttemptHash, ParsedResults.Argon2idHash);
         }
     }

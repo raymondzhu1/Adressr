@@ -2,7 +2,7 @@
 
 namespace Adressr.Library.Models
 {
-    public class Profile : IProfile
+    public class ProfileDTO : IProfile
     {
         public required string Name { get; set; }
 
