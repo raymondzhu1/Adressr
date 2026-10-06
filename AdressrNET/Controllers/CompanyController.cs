@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdressrNET.Controllers
 {
+    [ApiController]
+    [Route("/company")]
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyRepository _companyRepository;

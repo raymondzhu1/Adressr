@@ -4,6 +4,7 @@ using Adressr.Library.Models;
 
 namespace AdressrNET.Controllers
 {
+    [ApiController]
     [Route("/user")]
     public class UserController : ControllerBase
     {
