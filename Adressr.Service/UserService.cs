@@ -5,12 +5,15 @@ using Adressr.Data.Model;
 using Konscious.Security.Cryptography;
 using System.Security.Cryptography;
 using System.Text;
+using Adressr.Service.Interface;
 
 namespace Adressr.Service
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IPreferenceRepository _preferenceRepository;
+        private readonly IRepositorySaver _repositorySaver;
         private const int SaltSize = 16;
         private const int HashSize = 16;
         private const int DegreeOfParallelism = 1;
@@ -21,9 +24,11 @@ namespace Adressr.Service
             ["argon2id"] = new HashSet<int> { 19 }
         };
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IPreferenceRepository preferenceRepository, IRepositorySaver repositorySaver)
         {
             _userRepository = userRepository;
+            _preferenceRepository = preferenceRepository;
+            _repositorySaver = repositorySaver;
         }
 
         private static byte[] GenerateSaltValue(int size)
@@ -156,13 +161,20 @@ namespace Adressr.Service
                 Password = PHCString
             };
 
-            User NewUser = await _userRepository.AddUserAsync(user);
+            await _userRepository.AddUserAsync(user);
+
+            Preference preference = new Preference { User = user, DarkMode = false, ProfilePrivate = false };
+            await _preferenceRepository.AddAsync(preference);
+
+            //add profile creation after this as well.
+
+            await _repositorySaver.SaveChangesAsync();
 
             UserDTO result = new UserDTO
             {
-                UserID = NewUser.UserID,
-                Username = NewUser.Username,
-                Email = NewUser.Email
+                UserID = user.UserID,
+                Username = user.Username,
+                Email = user.Email
             };
 
             return result;

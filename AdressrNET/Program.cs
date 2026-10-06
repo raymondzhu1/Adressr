@@ -24,6 +24,9 @@ builder.Services.AddDbContext<AdressrContext>(options => options.UseSqlServer(bu
 
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPreferenceRepository, PreferenceRepository>();
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IRepositorySaver, RepositorySaver>();
 
 builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
 builder.Services.AddExceptionHandler<DbUpdateExceptionHandler>();

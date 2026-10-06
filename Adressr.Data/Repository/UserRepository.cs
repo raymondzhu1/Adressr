@@ -13,11 +13,10 @@ namespace Adressr.Data.Repository
             _context = context;
         }
 
-        public async Task<User> AddUserAsync(User user)
+        public Task AddUserAsync(User user)
         {
             _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            return user;
+            return Task.CompletedTask;
         }
 
         public Task<User?> GetByUsernameAsync(string username)

@@ -2,7 +2,7 @@
 
 namespace Adressr.Library.Models
 {
-    public class Preference : IPreference
+    public class PreferenceDTO : IPreference
     {
         public bool DarkMode { get; set; }
 
