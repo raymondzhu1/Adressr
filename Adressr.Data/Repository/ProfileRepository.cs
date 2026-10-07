@@ -22,6 +22,7 @@ namespace Adressr.Data.Repository
         public Task UpdateProfileAsync(Profile profile)
         {
             _context.Profiles.Update(profile);
+            _context.SaveChangesAsync();
             return Task.CompletedTask;
         }
 

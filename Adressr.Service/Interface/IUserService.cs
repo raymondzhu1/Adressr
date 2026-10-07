@@ -5,6 +5,6 @@ namespace Adressr.Service.Interface
     public interface IUserService
     {
         Task<UserDTO> RegisterAsync(RegisterUserRequest request);
-        Task<bool> VerifyIdentityAsync(string SomeIdentifier, string InputtedPassword);
+        Task<UserDTO?> VerifyIdentityAsync(string SomeIdentifier, string InputtedPassword);
     }
 }

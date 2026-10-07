@@ -193,12 +193,12 @@ namespace Adressr.Service
             return result;
         }
 
-        public async Task<bool> VerifyIdentityAsync(string someIdentifier, string inputtedPassword)
+        public async Task<UserDTO?> VerifyIdentityAsync(string someIdentifier, string inputtedPassword)
         {
             User? user = await _userRepository.GetByUsernameOrEmailAsync(someIdentifier);
             if(user == null)
             {
-                return false;
+                return null;
             }
 
             PHCParseResult ParsedResults = ParsePHCString(user.Password);
@@ -208,7 +208,21 @@ namespace Adressr.Service
             }
 
             byte[] UserLoginAttemptHash = ComputeArgon2idHash(inputtedPassword, ParsedResults.Salt, ParsedResults.DegreeOfParallelism, ParsedResults.Iterations, ParsedResults.MemorySizeKiB);
-            return CryptographicOperations.FixedTimeEquals(UserLoginAttemptHash, ParsedResults.Argon2idHash);
+            bool matched = CryptographicOperations.FixedTimeEquals(UserLoginAttemptHash, ParsedResults.Argon2idHash);
+            if (matched)
+            {
+                UserDTO verifiedUser = new UserDTO
+                {
+                    UserID = user.UserID,
+                    Username = user.Username,
+                    Email = user.Email
+                };
+                return verifiedUser;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

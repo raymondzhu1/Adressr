@@ -1,5 +1,6 @@
 ﻿using Adressr.Data.Model;
 using Adressr.Data.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace Adressr.Data.Repository
 {
@@ -16,6 +17,11 @@ namespace Adressr.Data.Repository
         {
             _context.Preferences.Add(preference);
             return Task.CompletedTask;
+        }
+
+        public Task<Preference?> GetByUserIdAsync(int userId)
+        {
+            return _context.Preferences.SingleOrDefaultAsync(preference => preference.UserID == userId);
         }
     }
 }
