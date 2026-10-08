@@ -2,8 +2,9 @@
 
 namespace Adressr.Library.Models
 {
-    public class ProfileDTO : IProfile
+    public class ProfileResponse : IProfile
     {
+        public int ProfileID { get; set; }
         public required string Name { get; set; }
 
         public required string ProfilePicLocation { get; set; }

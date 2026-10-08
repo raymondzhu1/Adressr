@@ -30,5 +30,10 @@ namespace Adressr.Data.Repository
         {
             return _context.Profiles.SingleOrDefaultAsync(profile => profile.UserID == userId);
         }
+
+        public Task<Profile?> GetByUsernameAsync(string username)
+        {
+            return _context.Profiles.AsNoTracking().Include(profile => profile.User).ThenInclude(user => user.Preference).SingleOrDefaultAsync(profile => profile.User.Username == username);
+        }
     }
 }

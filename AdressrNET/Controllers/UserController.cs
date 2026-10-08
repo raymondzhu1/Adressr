@@ -11,7 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 namespace AdressrNET.Controllers
 {
     [ApiController]
-    [Route("/user")]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

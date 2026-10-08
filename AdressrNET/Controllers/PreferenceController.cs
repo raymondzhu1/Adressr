@@ -7,7 +7,7 @@ using System.Security.Claims;
 namespace AdressrNET.Controllers
 {
     [ApiController]
-    [Route("user/preference")]
+    [Route("user/[controller]")]
     [Authorize]
     public class PreferenceController : ControllerBase
     {
@@ -33,7 +33,7 @@ namespace AdressrNET.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> UpdatePreference(PreferenceDTO preferenceRequest)
         {
             int userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
