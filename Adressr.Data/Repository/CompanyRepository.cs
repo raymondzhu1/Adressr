@@ -1,5 +1,6 @@
 ﻿using Adressr.Data.Model;
 using Adressr.Data.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 
 namespace Adressr.Data.Repository
 {
@@ -12,16 +13,21 @@ namespace Adressr.Data.Repository
             _context = context;
         }
 
-        public async Task<Company> AddAsync(Company company)
+        public async Task AddAsync(Company company)
         {
             _context.Companies.Add(company);
             await _context.SaveChangesAsync();
-            return company;
+            return;
         }
 
-        public async Task<Company?> GetCompanyByIdAsync(int CompanyID)
+        public Task<Company?> GetCompanyByIdAsync(int CompanyID)
         {
-            return await _context.Companies.FindAsync(CompanyID);
+            return _context.Companies.SingleOrDefaultAsync(company => company.CompanyID == CompanyID);
+        }
+
+        public Task<List<Company>> GetByCreatorIdAsync(int creatorId)
+        {
+            return _context.Companies.AsNoTracking().Where(company => company.CreatorID == creatorId).OrderBy(company => company.Name).ToListAsync();
         }
     }
 }

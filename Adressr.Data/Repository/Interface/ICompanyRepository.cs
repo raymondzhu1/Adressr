@@ -4,7 +4,8 @@ namespace Adressr.Data.Repository.Interface
 {
     public interface ICompanyRepository
     {
-        Task<Company> AddAsync(Company company);
+        Task AddAsync(Company company);
         Task<Company?> GetCompanyByIdAsync(int CompanyID);
+        Task<List<Company>> GetByCreatorIdAsync(int creatorId);
     }
 }

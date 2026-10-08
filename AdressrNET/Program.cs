@@ -38,6 +38,7 @@ builder.Services.AddScoped<IRepositorySaver, RepositorySaver>();
 //Service layer configuration
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPreferenceService, PreferenceService>();
+builder.Services.AddScoped<ICompanyService, CompanyService>();
 
 //Exception Handlers configured and triggered in order stated.
 builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();

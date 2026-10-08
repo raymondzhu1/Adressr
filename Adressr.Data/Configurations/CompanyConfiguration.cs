@@ -12,6 +12,8 @@ namespace Adressr.Data.Configurations
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(30);
 
+            builder.Property(x => x.Description).IsRequired();
+
             builder.HasOne(x => x.Creator).WithMany(u => u.Companies).HasForeignKey(x => x.CreatorID).OnDelete(DeleteBehavior.Restrict);
         }
     }
