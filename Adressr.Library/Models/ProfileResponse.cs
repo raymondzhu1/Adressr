@@ -11,9 +11,7 @@ namespace Adressr.Library.Models
 
         public required string Education { get; set; }
 
-        public List<Experience>? Experience { get; set; }
-
-        public List<Skill>? Skills { get; set; }
+        public List<ExperienceResponse>? Experience { get; set; }
 
         public List<string>? Hobbies { get; set; }
 

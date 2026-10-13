@@ -9,10 +9,16 @@ namespace Adressr.Service
     public class ProfileService : IProfileService
     {
         private readonly IProfileRepository _profileRepository;
+        private readonly IProfileInterestRepository _profileInterestRepository;
+        private readonly IProfileHobbyRepository _profileHobbyRepository;
+        private readonly IExperienceService _experienceService;
 
-        public ProfileService(IProfileRepository profileRepository)
+        public ProfileService(IProfileRepository profileRepository, IProfileInterestRepository profileInterestRepository, IProfileHobbyRepository profileHobbyRepository, IExperienceService experienceService)
         {
             _profileRepository = profileRepository;
+            _profileInterestRepository = profileInterestRepository;
+            _profileHobbyRepository = profileHobbyRepository;
+            _experienceService = experienceService;
         }
 
         public async Task<ProfileResponse?> GetByUsernameAsync(string username, int? viewerUserId)
@@ -30,11 +36,18 @@ namespace Adressr.Service
                 return null;
             }
 
+            List<ExperienceResponse> experiences = await _experienceService.GetExperiencesExportedByProfileIdAsync(profile.ProfileID);
+            List<ProfileInterest> interests = await _profileInterestRepository.GetInterestsByProfileIdAsync(profile.ProfileID);
+            List<ProfileHobby> hobbies = await _profileHobbyRepository.GetHobbiesByProfileIdAsync(profile.ProfileID);
+
             ProfileResponse result = new ProfileResponse
             {
                 Name = profile.Name,
                 Education = profile.Education,
-                ProfilePicLocation = profile.ProfilePicLocation
+                ProfilePicLocation = profile.ProfilePicLocation,
+                Experience = experiences,
+                Interests = interests.OrderByDescending(i => i.CreatedDate).Select(i => i.InterestText).ToList(),
+                Hobbies = hobbies.OrderByDescending(h => h.CreatedDate).Select(h => h.HobbyText).ToList()
             };
             return result;
         }

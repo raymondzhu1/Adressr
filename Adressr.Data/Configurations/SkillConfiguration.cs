@@ -11,6 +11,8 @@ namespace Adressr.Data.Configurations
             builder.HasKey(x => x.SkillID);
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(20);
+
+            builder.HasIndex(x => x.Name).IsUnique();
         }
     }
 }

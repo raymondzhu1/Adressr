@@ -16,7 +16,7 @@ namespace Adressr.Data.Model
 
         public DateTime? EndDate { get; set; }
 
-        public bool Private { get; set; }
+        public bool IsExported { get; set; } //Flag for if this experience is exported from career manager to profile. Make false by default plz.
 
         public int ProfileID { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace Adressr.Library.Models
 {
-    public class Skill : ISkill
+    public class SkillResponse : ISkill
     {
         public required string Name { get; set; }
     }
