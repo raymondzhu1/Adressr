@@ -14,7 +14,9 @@ namespace Adressr.Data.Configurations
 
             builder.HasOne(SA => SA.ExamAttempt).WithMany(attempt => attempt.SubmittedAnswers).HasForeignKey(SA => SA.ExamAttemptID).IsRequired();
 
-            builder.HasMany(SA => SA.SelectedAnswers).WithMany().UsingEntity(x => x.ToTable("SubmittedAnswerSelectedAnswers"));
+            builder.HasMany(SA => SA.SelectedAnswers).WithMany().UsingEntity<Dictionary<string, object>>("SubmittedAnswerSelectedAnswers", 
+                                                                                                        right => right.HasOne<MultipleChoiceAnswerOption>().WithMany().HasForeignKey("MultipleChoiceAnswerOptionID").OnDelete(DeleteBehavior.Restrict), 
+                                                                                                        left => left.HasOne<SubmittedAnswer>().WithMany().HasForeignKey("SubmittedAnswerID").OnDelete(DeleteBehavior.Cascade));
         }
     }
 }

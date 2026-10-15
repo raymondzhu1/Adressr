@@ -36,3 +36,9 @@ launchSettings.json
 
 #Ignore some VS stuff again
 obj/
+
+#Ignore environment stuff for Docker.
+.env
+
+#Ignore the bin folder.
+*/bin
