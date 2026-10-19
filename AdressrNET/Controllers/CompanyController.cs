@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AdressrNET.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [Authorize]
     public class CompanyController : ControllerBase
     {

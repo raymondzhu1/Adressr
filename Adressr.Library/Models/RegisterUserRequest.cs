@@ -8,7 +8,7 @@ namespace Adressr.Library.Models
         public required string Username { get; set; }
         [MaxLength(150)]
         public required string Email { get; set; }
-        [MaxLength(255)]
+        [MaxLength(50)]
         public required string Password { get; set; }
         [MaxLength(50)]
         public required string Name { get; set; }

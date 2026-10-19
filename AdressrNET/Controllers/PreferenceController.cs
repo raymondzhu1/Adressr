@@ -7,7 +7,7 @@ using System.Security.Claims;
 namespace AdressrNET.Controllers
 {
     [ApiController]
-    [Route("user/[controller]")]
+    [Route("api/user/[controller]")]
     [Authorize]
     public class PreferenceController : ControllerBase
     {

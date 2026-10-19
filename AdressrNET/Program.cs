@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Adressr.Service.Interface;
 using Adressr.Service;
+using AdressrNET;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,11 +17,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+string[] allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReact", policy =>
+    options.AddPolicy(CorsPolicies.Frontend, policy =>
     {
-        policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+        //policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+        policy.WithOrigins(allowedOrigins).WithHeaders("Content-Type", "Authorization").WithMethods("GET", "POST", "PUT", "DELETE").SetPreflightMaxAge(TimeSpan.FromHours(1));
     });
 });
 
@@ -73,9 +77,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 var app = builder.Build();
 
-app.UseCors("AllowReact");
-
 app.UseExceptionHandler();
+app.UseHttpsRedirection();
+app.UseCors(CorsPolicies.Frontend);
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

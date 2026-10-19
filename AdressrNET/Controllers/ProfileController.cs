@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AdressrNET.Controllers
 {
-    [Route("user/[controller]")]
+    [Route("api/user/[controller]")]
     [ApiController]
     [Authorize]
     public class ProfileController : ControllerBase
