@@ -40,7 +40,8 @@ function validate(form: RegisterForm): FieldErrors {
     }
 
     const email = form.email.trim();
-    if(!/^\S+@\S+\.\S+$/.test(email)){
+    const EMAIL_PATTERN = /^[^\s@]+@[^\s@.]+(?:\.[^\s@.]+)+$/;
+    if(!EMAIL_PATTERN.test(email)){
         errors.email = "Enter a valid email address. I'm watching you buddy.";
     }
     else if(email.length > LIMITS.email) {
