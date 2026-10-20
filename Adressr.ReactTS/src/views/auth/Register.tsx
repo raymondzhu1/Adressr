@@ -28,6 +28,15 @@ const emptyForm: RegisterForm = {
 
 const LIMITS = { username: 30, email: 150, name: 50, education:70, password:50 };
 
+const allTouched: Record<keyof RegisterForm, boolean> = {
+    username: false,
+    email: false,
+    name: false,
+    education: false,
+    password: false,
+    confirmPassword: false
+};
+
 function validate(form: RegisterForm): FieldErrors {
     const errors: FieldErrors = {};
 
@@ -93,21 +102,26 @@ export function Register() {
     const { signIn } = useAuth();
 
     const [form, setForm] = useState<RegisterForm>(emptyForm);
-    const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+    const [touched, setTouched] = useState<Partial<Record<keyof RegisterForm, boolean>>>({});
+    const [serverErrors, setServerErrors] = useState<FieldErrors>({});
     const [formError, setFormError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const clientErrors = validate(form);
+
+    const errorFor = (field: keyof RegisterForm): string | undefined => serverErrors[field] ?? (touched[field] ? clientErrors[field] : undefined);
+    const markTouched = (field: keyof RegisterForm) => setTouched((current) => (current[field] ? current : {...current, [field]: true }));
     const update = (field: keyof RegisterForm) => (value: string) => setForm((current) => ({...current, [field]: value})); //Custom FormField already does (e) => onChange(e.target.value) on the onChange so we can just be a function that returns a function and chuck it into onChange in HTML.
 
     async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
         event.preventDefault();
         setFormError(null);
-
-        const errors = validate(form);
-        setFieldErrors(errors);
-        if(Object.keys(errors).length > 0) {
+        setServerErrors({});
+        setTouched(allTouched);
+        if(Object.keys(clientErrors).length > 0) {
             return;
         }
+
         setIsSubmitting(true);
 
         try{
@@ -121,9 +135,9 @@ export function Register() {
         }
         catch(err){
             if(err instanceof ApiError) {
-                const serverErrors = toFieldErrors(err.problem);
-                setFieldErrors(serverErrors);
-                if(Object.keys(serverErrors).length === 0) {
+                const mappedServerErrors = toFieldErrors(err.problem);
+                setServerErrors(mappedServerErrors);
+                if(Object.keys(mappedServerErrors).length === 0) {
                     setFormError(err.message);
                 }
             }
@@ -150,12 +164,12 @@ export function Register() {
             <h1>Create an account</h1>
             <form onSubmit={handleSubmit} noValidate>
                 {formError && <p role="alert">{formError}</p>}
-                <FormField id="username" label="Username" value={form.username} onChange={update("username")} autoComplete="username" maxLength={LIMITS.username} required error={fieldErrors.username} />
-                <FormField id="email" label="E-mail Address" type="email" value={form.email} onChange={update("email")} autoComplete="email" required error={fieldErrors.email} />
-                <FormField id="fullName" label="Full Name" value={form.name} onChange={update("name")} autoComplete="name" maxLength={LIMITS.name} required error={fieldErrors.name} />
-                <FormField id="education" label="Education" value={form.education} onChange={update("education")} maxLength={LIMITS.education} error={fieldErrors.education} />
-                <FormField id="password" label="Password" type="password" value={form.password} onChange={update("password")} autoComplete="new-password" required error={fieldErrors.password} />
-                <FormField id="confirmPassword" label="Confirm Password" type="password" value={form.confirmPassword} onChange={update("confirmPassword")} autoComplete="new-password" required error={fieldErrors.confirmPassword} />
+                <FormField id="username" label="Username" value={form.username} onChange={update("username")} onBlur={() => markTouched("username")} autoComplete="username" maxLength={LIMITS.username} required error={errorFor("username")} />
+                <FormField id="email" label="E-mail Address" type="email" value={form.email} onChange={update("email")} onBlur={() => markTouched("email")} autoComplete="email" required error={errorFor("email")} />
+                <FormField id="name" label="Full Name" value={form.name} onChange={update("name")} onBlur={() => markTouched("name")} autoComplete="name" maxLength={LIMITS.name} required error={errorFor("name")} />
+                <FormField id="education" label="Education" value={form.education} onChange={update("education")} onBlur={() => markTouched("education")} maxLength={LIMITS.education} error={errorFor("education")} />
+                <FormField id="password" label="Password" type="password" value={form.password} onChange={update("password")} onBlur={() => markTouched("password")} autoComplete="new-password" required error={errorFor("password")} />
+                <FormField id="confirmPassword" label="Confirm Password" type="password" value={form.confirmPassword} onChange={update("confirmPassword")} onBlur={() => markTouched("confirmPassword")} autoComplete="new-password" required error={errorFor("confirmPassword")} />
                 <button type="submit" disabled={isSubmitting}>{isSubmitting ? "Creating account. Hold on..." : "Register"}</button>
             </form>
             <p>Already have an account? <Link to="/login">Login instead</Link></p>
