@@ -29,12 +29,12 @@ const emptyForm: RegisterForm = {
 const LIMITS = { username: 30, email: 150, name: 50, education:70, password:50 };
 
 const allTouched: Record<keyof RegisterForm, boolean> = {
-    username: false,
-    email: false,
-    name: false,
-    education: false,
-    password: false,
-    confirmPassword: false
+    username: true,
+    email: true,
+    name: true,
+    education: true,
+    password: true,
+    confirmPassword: true
 };
 
 function validate(form: RegisterForm): FieldErrors {
