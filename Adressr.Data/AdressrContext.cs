@@ -19,6 +19,7 @@ namespace Adressr.Data
         public DbSet<Opening> Openings { get; set; }
         public DbSet<OpeningApplicants> OpeningApplicants { get; set; }
         public DbSet<PlainTextEmployee> PlainTextEmployees { get; set; }
+        public DbSet<WorkersToPosition> WorkersToPosition { get; set; }
 
         //A bit of both of the above.
         public DbSet<Experience> Experiences { get; set; }

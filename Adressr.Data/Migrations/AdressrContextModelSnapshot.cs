@@ -211,9 +211,15 @@ namespace Adressr.Data.Migrations
                     b.Property<int>("CompanyID")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastClosedTime")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -226,12 +232,18 @@ namespace Adressr.Data.Migrations
                     b.Property<int>("PositionID")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("ReopenedTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<decimal>("Wage")
                         .HasPrecision(15, 2)
                         .HasColumnType("decimal(15,2)");
 
                     b.Property<int>("WageType")
                         .HasColumnType("int");
+
+                    b.Property<bool>("isClosed")
+                        .HasColumnType("bit");
 
                     b.HasKey("OpeningID");
 
@@ -274,6 +286,14 @@ namespace Adressr.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PlainTextEmployeeID"));
 
+                    b.Property<int>("CompanyID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -282,12 +302,10 @@ namespace Adressr.Data.Migrations
                     b.Property<DateTime>("HireDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PositionID")
-                        .HasColumnType("int");
-
                     b.HasKey("PlainTextEmployeeID");
 
-                    b.HasIndex("PositionID");
+                    b.HasIndex("CompanyID", "Email")
+                        .IsUnique();
 
                     b.ToTable("PlainTextEmployees");
                 });
@@ -302,6 +320,9 @@ namespace Adressr.Data.Migrations
 
                     b.Property<int>("CompanyID")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -579,6 +600,31 @@ namespace Adressr.Data.Migrations
                     b.ToTable("Tasks");
                 });
 
+            modelBuilder.Entity("Adressr.Data.Model.WorkersToPosition", b =>
+                {
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PositionID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("HireDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal?>("Wage")
+                        .HasPrecision(15, 2)
+                        .HasColumnType("decimal(15,2)");
+
+                    b.Property<int?>("WageType")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserID", "PositionID");
+
+                    b.HasIndex("PositionID");
+
+                    b.ToTable("WorkersToPosition", (string)null);
+                });
+
             modelBuilder.Entity("ExamUser", b =>
                 {
                     b.Property<int>("PrivateExamParticipantsUserID")
@@ -624,19 +670,19 @@ namespace Adressr.Data.Migrations
                     b.ToTable("OpeningSkills", (string)null);
                 });
 
-            modelBuilder.Entity("PositionUser", b =>
+            modelBuilder.Entity("PlainTextEmployeePosition", b =>
                 {
+                    b.Property<int>("PlainTextiesPlainTextEmployeeID")
+                        .HasColumnType("int");
+
                     b.Property<int>("PositionsPositionID")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkersUserID")
-                        .HasColumnType("int");
+                    b.HasKey("PlainTextiesPlainTextEmployeeID", "PositionsPositionID");
 
-                    b.HasKey("PositionsPositionID", "WorkersUserID");
+                    b.HasIndex("PositionsPositionID");
 
-                    b.HasIndex("WorkersUserID");
-
-                    b.ToTable("WorkersToPosition", (string)null);
+                    b.ToTable("PlainTextEmployeesPositions", (string)null);
                 });
 
             modelBuilder.Entity("SubmittedAnswerSelectedAnswers", b =>
@@ -769,13 +815,13 @@ namespace Adressr.Data.Migrations
 
             modelBuilder.Entity("Adressr.Data.Model.PlainTextEmployee", b =>
                 {
-                    b.HasOne("Adressr.Data.Model.Position", "Position")
+                    b.HasOne("Adressr.Data.Model.Company", "Company")
                         .WithMany("PlainTexties")
-                        .HasForeignKey("PositionID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("CompanyID")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Position");
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("Adressr.Data.Model.Position", b =>
@@ -885,6 +931,25 @@ namespace Adressr.Data.Migrations
                     b.Navigation("Experience");
                 });
 
+            modelBuilder.Entity("Adressr.Data.Model.WorkersToPosition", b =>
+                {
+                    b.HasOne("Adressr.Data.Model.Position", "Position")
+                        .WithMany("Workers")
+                        .HasForeignKey("PositionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Adressr.Data.Model.User", "User")
+                        .WithMany("Positions")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Position");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ExamUser", b =>
                 {
                     b.HasOne("Adressr.Data.Model.User", null)
@@ -930,17 +995,17 @@ namespace Adressr.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PositionUser", b =>
+            modelBuilder.Entity("PlainTextEmployeePosition", b =>
                 {
-                    b.HasOne("Adressr.Data.Model.Position", null)
+                    b.HasOne("Adressr.Data.Model.PlainTextEmployee", null)
                         .WithMany()
-                        .HasForeignKey("PositionsPositionID")
+                        .HasForeignKey("PlainTextiesPlainTextEmployeeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Adressr.Data.Model.User", null)
+                    b.HasOne("Adressr.Data.Model.Position", null)
                         .WithMany()
-                        .HasForeignKey("WorkersUserID")
+                        .HasForeignKey("PositionsPositionID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -963,6 +1028,8 @@ namespace Adressr.Data.Migrations
             modelBuilder.Entity("Adressr.Data.Model.Company", b =>
                 {
                     b.Navigation("Openings");
+
+                    b.Navigation("PlainTexties");
 
                     b.Navigation("Positions");
                 });
@@ -991,9 +1058,9 @@ namespace Adressr.Data.Migrations
                 {
                     b.Navigation("Openings");
 
-                    b.Navigation("PlainTexties");
-
                     b.Navigation("PositionPreference");
+
+                    b.Navigation("Workers");
                 });
 
             modelBuilder.Entity("Adressr.Data.Model.Profile", b =>
@@ -1019,6 +1086,8 @@ namespace Adressr.Data.Migrations
                     b.Navigation("ExamAttempts");
 
                     b.Navigation("OpeningsApplied");
+
+                    b.Navigation("Positions");
 
                     b.Navigation("Preference");
 

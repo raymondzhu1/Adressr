@@ -117,7 +117,7 @@ export function Register() {
         event.preventDefault();
         setFormError(null);
         setServerErrors({});
-        setTouched(allTouched);
+        setTouched(allTouched); //Set everything as touched when submitting even if it wasnt by user.
         if(Object.keys(clientErrors).length > 0) {
             return;
         }

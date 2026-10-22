@@ -6,9 +6,13 @@
 
         public required string FullName { get; set; }
 
+        public required string Email { get; set; }
+
         public DateTime HireDate { get; set; }
 
-        public int PositionID { get; set; }
-        public Position Position { get; set; } = null!;
+        public int CompanyID { get; set; } //used for unique composite key
+        public Company Company { get; set; } = null!;
+
+        public ICollection<Position> Positions { get; set; } = new List<Position>();
     }
 }

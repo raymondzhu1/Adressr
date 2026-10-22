@@ -18,5 +18,7 @@ namespace Adressr.Data.Model
         public ICollection<Position> Positions { get; set; } = new List<Position>();
 
         public ICollection<Opening> Openings { get; set; } = new List<Opening>();
+
+        public ICollection<PlainTextEmployee> PlainTexties { get; set; } = new List<PlainTextEmployee>();
     }
 }

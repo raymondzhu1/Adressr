@@ -17,6 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+//CORS configuration section.
 string[] allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
 
 builder.Services.AddCors(options =>
@@ -42,6 +43,8 @@ builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IWorkTaskRepository, WorkTaskRepository>();
 builder.Services.AddScoped<IProfileInterestRepository, ProfileInterestRepository>();
 builder.Services.AddScoped<IProfileHobbyRepository, ProfileHobbyRepository>();
+builder.Services.AddScoped<IOpeningRepository, OpeningRepository>();
+builder.Services.AddScoped<IPositionRepository, PositionRepository>();
 builder.Services.AddScoped<IRepositorySaver, RepositorySaver>();
 
 //Service layer configuration
@@ -50,6 +53,8 @@ builder.Services.AddScoped<IPreferenceService, PreferenceService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IExperienceService, ExperienceService>();
+builder.Services.AddScoped<IOpeningService, OpeningService>();
+builder.Services.AddScoped<IPositionService, PositionService>();
 
 //Exception Handlers configured and triggered in order stated.
 builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();

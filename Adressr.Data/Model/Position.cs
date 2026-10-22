@@ -12,13 +12,16 @@ namespace Adressr.Data.Model
 
         public required string Summary { get; set; }
 
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
         public int CompanyID { get; set; }
 
         public Company Company { get; set; } = null!;
 
         public PositionPreference? PositionPreference { get; set; }
 
-        public ICollection<User> Workers { get; set; } = new List<User>();
+        public ICollection<WorkersToPosition> Workers { get; set; } = new List<WorkersToPosition>();
+        //public ICollection<User> Workers { get; set; } = new List<User>();
         public ICollection<PlainTextEmployee> PlainTexties { get; set; } = new List<PlainTextEmployee>();
         public ICollection<Opening> Openings { get; set; } = new List<Opening>();
     }

@@ -12,10 +12,12 @@ namespace AdressrNET.Controllers
     public class CompanyController : ControllerBase
     {
         private readonly ICompanyService _companyService;
+        private readonly IPositionService _positionService;
 
-        public CompanyController(ICompanyService companyService)
+        public CompanyController(ICompanyService companyService, IPositionService positionService)
         {
             _companyService = companyService;
+            _positionService = positionService;
         }
 
         [HttpPost]
@@ -30,7 +32,7 @@ namespace AdressrNET.Controllers
         public async Task<ActionResult<CompanyResponse>> GetCompanyByCompanyId(int companyId)
         {
             CompanyResponse? response = await _companyService.GetByIdAsync(companyId);
-            if(response is null)
+            if (response is null)
             {
                 return NotFound();
             }
@@ -45,6 +47,34 @@ namespace AdressrNET.Controllers
         {
             List<CompanyResponse> response = await _companyService.GetByCreatorIdAsync(User.GetUserId());
             return response;
+        }
+
+        [HttpGet("{companyId:int}/positions")]
+        public async Task<ActionResult<List<PositionResponse>>> GetPositions(int companyId)
+        {
+            List<PositionResponse> response = await _positionService.GetPositionsByCompanyIdAsync(companyId);
+            return response;
+        }
+
+        [HttpGet("{companyId:int}/positions/{positionId:int}")]
+        public async Task<ActionResult<PositionResponse>> GetPosition(int companyId, int positionId)
+        {
+            PositionResponse? response = await _positionService.GetPositionByPositionIdAsync(companyId, positionId);
+            if(response is null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return response;
+            }
+        }
+
+        [HttpPost("{companyId:int}/positions")]
+        public async Task<ActionResult<PositionResponse>> CreatePosition(int companyId, PositionRequest positionRequest)
+        {
+            PositionResponse response = await _positionService.CreatePositionByCompanyIdAsync(companyId, positionRequest);
+            return CreatedAtAction(nameof(GetPosition), new { companyId, positionId = response.PositionID }, response);
         }
     }
 }

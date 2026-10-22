@@ -17,6 +17,14 @@ namespace Adressr.Data.Model
 
         public int NumberOfOpenings { get; set; }
 
+        public bool isClosed { get; set; }
+
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+
+        public DateTime? ReopenedTime { get; set; }
+
+        public DateTime? LastClosedTime { get; set; }
+
         public int CompanyID { get; set; }
 
         public Company Company { get; set; } = null!;

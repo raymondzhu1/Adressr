@@ -23,3 +23,5 @@ Future Features To Be Added:
 
 Things that are a bit iffy:
 * Adding a location for contracts to be added digitally per individual, so that contracts for each individual are managed in the system as well. Individuals would also be able to easily access their own contracts even after leaving the company.
+
+Also, I know I can probably split these into at least a few different microservices, if not way more, but it's a bit too much overhead for an already oversized pet project.

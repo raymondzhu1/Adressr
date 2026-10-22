@@ -12,7 +12,13 @@ namespace Adressr.Data.Configurations
 
             builder.Property(plain => plain.FullName).IsRequired().HasMaxLength(50);
 
-            builder.HasOne(plain => plain.Position).WithMany(p => p.PlainTexties).IsRequired();
+            builder.Property(plain => plain.Email).IsRequired().HasMaxLength(150);
+
+            builder.HasIndex(plain => new { plain.CompanyID, plain.Email }).IsUnique();
+
+            builder.HasOne(plain => plain.Company).WithMany(company => company.PlainTexties).HasForeignKey(plain => plain.CompanyID).OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(plain => plain.Positions).WithMany(p => p.PlainTexties).UsingEntity(join => join.ToTable("PlainTextEmployeesPositions"));
         }
     }
 }
