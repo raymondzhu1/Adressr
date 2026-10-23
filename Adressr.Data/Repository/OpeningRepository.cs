@@ -27,5 +27,10 @@ namespace Adressr.Data.Repository
         {
             return _context.Openings.AsNoTracking().Where(opening => opening.PositionID == positionId).SumAsync(opening => opening.NumberOfOpenings);
         }
+
+        public Task<Dictionary<int, int>> GetNumberOfOpeningsByMultiplePositionIdsAsync(IReadOnlyCollection<int> positionIds)
+        {
+            return _context.Openings.AsNoTracking().Where(opening => positionIds.Contains(opening.PositionID)).GroupBy(opening => opening.PositionID).Select(group => new { PositionID = group.Key, Count = group.Sum(opening => opening.NumberOfOpenings) }).ToDictionaryAsync(key => key.PositionID, value => value.Count);
+        }
     }
 }

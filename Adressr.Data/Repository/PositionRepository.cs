@@ -37,6 +37,16 @@ namespace Adressr.Data.Repository
             return totalRegisteredEmployees + totalUnregisteredEmployees;
         }
 
+        public Task<Dictionary<int, int>> GetEmployeeCountsByMultiplePositionIdsAsync(IReadOnlyCollection<int> positionIds)
+        {
+            return _context.Positions.AsNoTracking().Where(position => positionIds.Contains(position.PositionID)).Select(position => new { position.PositionID, Count = position.Workers.Count + position.PlainTexties.Count }).ToDictionaryAsync(key => key.PositionID, value => value.Count);
+        }
+
+        public Task<bool> IsRequesterPartOfCompanyAsync(int userId, int companyId)
+        {
+            return _context.WorkersToPosition.AnyAsync(wp => wp.UserID == userId && wp.Position.CompanyID == companyId);
+        }
+
         public Task<List<User>> GetRegisterEmployeesByPositionIdAsync(int positionId)
         {
             return _context.Users.AsNoTracking().Where(user => user.Positions.Any(wp => wp.PositionID == positionId)).ToListAsync();

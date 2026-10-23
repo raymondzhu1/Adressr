@@ -29,5 +29,10 @@ namespace Adressr.Data.Repository
         {
             return _context.Companies.AsNoTracking().Where(company => company.CreatorID == creatorId).OrderBy(company => company.Name).ToListAsync();
         }
+
+        public Task<int> GetCreatorIdAsync(int companyId)
+        {
+            return _context.Companies.AsNoTracking().Where(company => company.CompanyID == companyId).Select(company => company.CreatorID).FirstOrDefaultAsync();
+        }
     }
 }

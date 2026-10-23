@@ -7,5 +7,6 @@ namespace Adressr.Data.Repository.Interface
         Task AddAsync(Company company);
         Task<Company?> GetCompanyByIdAsync(int CompanyID);
         Task<List<Company>> GetByCreatorIdAsync(int creatorId);
+        Task<int> GetCreatorIdAsync(int companyId);
     }
 }

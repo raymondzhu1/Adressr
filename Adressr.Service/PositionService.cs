@@ -2,6 +2,7 @@
 using Adressr.Data.Model;
 using Adressr.Library.Models;
 using Adressr.Service.Interface;
+using Adressr.Library.CustomExceptions;
 
 namespace Adressr.Service
 {
@@ -34,8 +35,7 @@ namespace Adressr.Service
             return new UserDTO
             {
                 UserID = user.UserID,
-                Username = user.Username,
-                Email = user.Email
+                Username = user.Username
             };
         }
 
@@ -49,30 +49,86 @@ namespace Adressr.Service
             };
         }
 
-        public async Task<List<PositionResponse>> GetPositionsByCompanyIdAsync(int companyId)
+        private async Task<bool> IsPermittedGeneral(int requesterId, int companyId, int? creatorId = null, bool isEmployeeAllowed = true)
         {
-            //REWRITE: Rewrite to be more efficient, especially that dang foreach loop.
-            //Description and summary usually aren't both needed at the same time, take one or the other.
-
-            List<PositionResponse> toReturn = new List<PositionResponse>();
-            List<Position> positionResults = await _positionRepository.GetPositionsByCompanyIdAsync(companyId);
-            foreach (Position pos in positionResults)
+            int creatorIdChecked = creatorId ?? await _companyRepository.GetCreatorIdAsync(companyId);
+            if(creatorIdChecked == 0)
             {
-                toReturn.Add(new PositionResponse
-                {
-                    PositionID = pos.PositionID,
-                    Description = pos.Description,
-                    Title = pos.Title,
-                    Summary = pos.Summary,
-                    NumInCompany = await _positionRepository.GetNumberOfEmployeesForPositionByPositionIdAsync(pos.PositionID),
-                    NumberOfOpenings = await _openingRepository.GetNumberOfOpeningsByPositionIdAsync(pos.PositionID)
-                });
+                return false;
             }
-            return toReturn;
+
+            bool isCreator = creatorIdChecked == requesterId;
+
+            if (isCreator)
+            {
+                return true;
+            }
+            else
+            {
+                bool isEmployee = await _positionRepository.IsRequesterPartOfCompanyAsync(requesterId, companyId);
+                if (isEmployeeAllowed && isEmployee)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
-        public async Task<PositionResponse> CreatePositionByCompanyIdAsync(int companyId, PositionRequest positionRequest)
+        public async Task<List<PositionResponse>?> GetPositionsByCompanyIdAsync(int requesterId, int companyId)
         {
+            //REWRITE: Code rewritten so that now instead of going through the foreach loop, I'm just doing three queries.
+            // Saves on an insane number of queries that the foreach loop would run for each individual position from the positionResults. Batching the ids into one query solves this.
+            // Need to check requester before doing this.
+
+            Company? company = await _companyRepository.GetCompanyByIdAsync(companyId);
+            if (company is null)
+            {
+                return null;
+            }
+            bool isPermitted = await IsPermittedGeneral(requesterId, companyId, company.CreatorID);
+            if (!isPermitted)
+            {
+                throw new ForbiddenException("You are not allowed to see positions for this company.", "Some name here");
+            }
+
+            List<Position> positionResults = await _positionRepository.GetPositionsByCompanyIdAsync(companyId);
+            if(positionResults.Count == 0)
+            {
+                return [];
+            }
+
+            List<int> positionIds = positionResults.Select(position => position.PositionID).ToList();
+            Dictionary<int, int> employeeCounts = await _positionRepository.GetEmployeeCountsByMultiplePositionIdsAsync(positionIds);
+            Dictionary<int, int> openingCounts = await _openingRepository.GetNumberOfOpeningsByMultiplePositionIdsAsync(positionIds);
+
+            return positionResults.Select(position => new PositionResponse
+            {
+                PositionID = position.PositionID,
+                Title = position.Title,
+                Summary = position.Summary,
+                Description = position.Description,
+                NumInCompany = employeeCounts.GetValueOrDefault(position.PositionID),
+                NumberOfOpenings = openingCounts.GetValueOrDefault(position.PositionID)
+            }).ToList();
+        }
+
+        public async Task<PositionResponse?> CreatePositionByCompanyIdAsync(int requesterId, int companyId, PositionRequest positionRequest)
+        {
+            //Check requester tobeadded.
+            Company? company = await _companyRepository.GetCompanyByIdAsync(companyId);
+            if (company is null)
+            {
+                return null;
+            }
+            bool isPermitted = await IsPermittedGeneral(requesterId, companyId, company.CreatorID);
+            if (!isPermitted)
+            {
+                throw new ForbiddenException("You are not allowed to create a position within this company.", "Some name here");
+            }
+
             int summaryMaxLength = 200; 
 
             Position toAdd = new Position
@@ -87,7 +143,7 @@ namespace Adressr.Service
             return BasicToResponse(toAdd);
         }
 
-        public async Task<PositionResponse?> GetPositionByPositionIdAsync(int companyId, int positionId)
+        public async Task<PositionResponse?> GetPositionByPositionIdAsync(int requesterId, int companyId, int positionId)
         {
             //REWRITE: Has a similar issue as GetPositions. Rewrite this later.
             //First need to verify the companyId for this positionId is legit. After that can use the position ID.
@@ -100,34 +156,27 @@ namespace Adressr.Service
             else
             {
                 Position? position = await _positionRepository.GetPositionByPositionIdAsync(positionId);
-                if (position is null)
+                if (position is null || position.CompanyID != companyId)
                 {
                     return null;
                 }
                 else
                 {
+                    //bool isCreator = company.CreatorID == requesterId;
+                    //bool isEmployee = await _positionRepository.IsRequesterPartOfCompanyAsync(requesterId, companyId);
+                    bool isPermitted = await IsPermittedGeneral(requesterId, companyId, company.CreatorID);
+                    if (!isPermitted)
+                    {
+                        throw new ForbiddenException(company.Name);
+                    }
+
                     PositionResponse toReturn = BasicToResponse(position);
-                    //toReturn.NumInCompany = await _positionRepository.GetNumberOfEmployeesForPositionByPositionIdAsync(position.PositionID);
                     toReturn.NumberOfOpenings = await _openingRepository.GetNumberOfOpeningsByPositionIdAsync(position.PositionID);
-                    //toReturn.SiteAvailableEmployees = ToUserResponse(await _positionRepository.GetRegisterEmployeesByPositionIdAsync(position.PositionID));
-
                     List<User> siteEmployees = await _positionRepository.GetRegisterEmployeesByPositionIdAsync(position.PositionID);
-                    List<UserDTO> siteResponseEmployees = new List<UserDTO>();
-                    foreach (User user in siteEmployees)
-                    {
-                        siteResponseEmployees.Add(ToUserResponse(user));
-                    }
-                    toReturn.SiteAvailableEmployees = siteResponseEmployees;
-
-                    List<PlainTextEmployeeResponse> plainies = new List<PlainTextEmployeeResponse>();
                     List<PlainTextEmployee> plainTexts = await _positionRepository.GetPlainTextEmployeesByPositionIdAsync(position.PositionID);
-                    foreach (PlainTextEmployee plains in plainTexts)
-                    {
-                        plainies.Add(ToPlainTextResponse(plains));
-                    }
-                    toReturn.PlainTextEmployees = plainies;
-
-                    toReturn.NumInCompany = siteResponseEmployees.Count + plainies.Count;
+                    toReturn.SiteAvailableEmployees = siteEmployees.Select(ToUserResponse).ToList();
+                    toReturn.PlainTextEmployees = plainTexts.Select(ToPlainTextResponse).ToList();
+                    toReturn.NumInCompany = siteEmployees.Count + plainTexts.Count;
 
                     return toReturn;
                 }

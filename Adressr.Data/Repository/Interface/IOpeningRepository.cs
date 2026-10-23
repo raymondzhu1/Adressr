@@ -9,5 +9,7 @@ namespace Adressr.Data.Repository.Interface
         Task<int> GetNumberOfOpeningsByPositionIdAsync(int positionId);
 
         Task<List<Opening>> GetOpeningsByPositionIdAsync(int positionId);
+
+        Task<Dictionary<int, int>> GetNumberOfOpeningsByMultiplePositionIdsAsync(IReadOnlyCollection<int> positionIds);
     }
 }

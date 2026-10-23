@@ -58,6 +58,7 @@ builder.Services.AddScoped<IPositionService, PositionService>();
 
 //Exception Handlers configured and triggered in order stated.
 builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
+builder.Services.AddExceptionHandler<ForbiddenExceptionHandler>();
 builder.Services.AddExceptionHandler<DbUpdateExceptionHandler>();
 builder.Services.AddExceptionHandler<UsernameExistsExceptionHandler>();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();

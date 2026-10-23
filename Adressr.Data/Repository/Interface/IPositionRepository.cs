@@ -39,6 +39,15 @@ namespace Adressr.Data.Repository.Interface
         Task<int> GetNumberOfEmployeesForPositionByPositionIdAsync(int positionId);
 
         /// <summary>
+        /// Gets the number of employees for a multitude of positions.
+        /// </summary>
+        /// <param name="positionIds">The read only collection of ids to be checked against the database.</param>
+        /// <returns>
+        /// A dictionary containing a key for the position id and the value being the count for the number of employees under this position.
+        /// </returns>
+        Task<Dictionary<int, int>> GetEmployeeCountsByMultiplePositionIdsAsync(IReadOnlyCollection<int> positionIds);
+
+        /// <summary>
         /// Gets the list of employees that work under this position in this company that also have a profile on this website.
         /// </summary>
         /// <param name="positionId">Position ID to lookup in the database.</param>
@@ -55,5 +64,15 @@ namespace Adressr.Data.Repository.Interface
         /// The list of employees for this position that are not a registered user of this website.
         /// </returns>
         Task<List<PlainTextEmployee>> GetPlainTextEmployeesByPositionIdAsync(int positionId);
+
+        /// <summary>
+        /// Checks if the requester is part of the organization/company ID given.
+        /// </summary>
+        /// <param name="userId">The user ID according to the user they're signed in as.</param>
+        /// <param name="companyId">The Company ID to be checked in</param>
+        /// <returns>
+        /// Returns true if user is part of the company by being under some position within the company, otherwise returns false.
+        /// </returns>
+        Task<bool> IsRequesterPartOfCompanyAsync(int userId, int companyId);
     }
 }

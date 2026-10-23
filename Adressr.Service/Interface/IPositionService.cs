@@ -4,10 +4,10 @@ namespace Adressr.Service.Interface
 {
     public interface IPositionService
     {
-        Task<List<PositionResponse>> GetPositionsByCompanyIdAsync(int companyId);
+        Task<List<PositionResponse>?> GetPositionsByCompanyIdAsync(int requesterId, int companyId);
 
-        Task<PositionResponse> CreatePositionByCompanyIdAsync(int companyId, PositionRequest positionRequest);
+        Task<PositionResponse?> CreatePositionByCompanyIdAsync(int requesterId,int companyId, PositionRequest positionRequest);
 
-        Task<PositionResponse?> GetPositionByPositionIdAsync(int companyId, int positionId);
+        Task<PositionResponse?> GetPositionByPositionIdAsync(int requesterId, int companyId, int positionId);
     }
 }

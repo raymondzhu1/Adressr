@@ -52,14 +52,21 @@ namespace AdressrNET.Controllers
         [HttpGet("{companyId:int}/positions")]
         public async Task<ActionResult<List<PositionResponse>>> GetPositions(int companyId)
         {
-            List<PositionResponse> response = await _positionService.GetPositionsByCompanyIdAsync(companyId);
-            return response;
+            List<PositionResponse>? response = await _positionService.GetPositionsByCompanyIdAsync(User.GetUserId(), companyId);
+            if(response is null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return response;
+            }
         }
 
         [HttpGet("{companyId:int}/positions/{positionId:int}")]
         public async Task<ActionResult<PositionResponse>> GetPosition(int companyId, int positionId)
         {
-            PositionResponse? response = await _positionService.GetPositionByPositionIdAsync(companyId, positionId);
+            PositionResponse? response = await _positionService.GetPositionByPositionIdAsync(User.GetUserId(), companyId, positionId);
             if(response is null)
             {
                 return NotFound();
@@ -73,8 +80,15 @@ namespace AdressrNET.Controllers
         [HttpPost("{companyId:int}/positions")]
         public async Task<ActionResult<PositionResponse>> CreatePosition(int companyId, PositionRequest positionRequest)
         {
-            PositionResponse response = await _positionService.CreatePositionByCompanyIdAsync(companyId, positionRequest);
-            return CreatedAtAction(nameof(GetPosition), new { companyId, positionId = response.PositionID }, response);
+            PositionResponse? response = await _positionService.CreatePositionByCompanyIdAsync(User.GetUserId(), companyId, positionRequest);
+            if(response is null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return CreatedAtAction(nameof(GetPosition), new { companyId, positionId = response.PositionID }, response);
+            }
         }
     }
 }
