@@ -5,6 +5,7 @@ import { loginUser, registerUser } from "../../auth/UserApi";
 import type { ProblemDetails } from "../../types/Error/problem.type";
 import { useAuth } from "../../auth/AuthContext";
 import { FormField } from "../../components/FormField";
+import { AuthLayout } from "../../auth/AuthLayout";
 
 interface RegisterForm {
     username: string,
@@ -160,19 +161,18 @@ export function Register() {
     }
 
     return(
-        <main>
-            <h1>Create an account</h1>
-            <form onSubmit={handleSubmit} noValidate>
-                {formError && <p role="alert">{formError}</p>}
+        <AuthLayout title="Create an account">
+            <form className="auth__form" onSubmit={handleSubmit} noValidate>
+                {formError && <p className="auth__error" role="alert">{formError}</p>}
                 <FormField id="username" label="Username" value={form.username} onChange={update("username")} onBlur={() => markTouched("username")} autoComplete="username" maxLength={LIMITS.username} required error={errorFor("username")} />
                 <FormField id="email" label="E-mail Address" type="email" value={form.email} onChange={update("email")} onBlur={() => markTouched("email")} autoComplete="email" required error={errorFor("email")} />
                 <FormField id="name" label="Full Name" value={form.name} onChange={update("name")} onBlur={() => markTouched("name")} autoComplete="name" maxLength={LIMITS.name} required error={errorFor("name")} />
                 <FormField id="education" label="Education" value={form.education} onChange={update("education")} onBlur={() => markTouched("education")} maxLength={LIMITS.education} error={errorFor("education")} />
                 <FormField id="password" label="Password" type="password" value={form.password} onChange={update("password")} onBlur={() => markTouched("password")} autoComplete="new-password" required error={errorFor("password")} />
                 <FormField id="confirmPassword" label="Confirm Password" type="password" value={form.confirmPassword} onChange={update("confirmPassword")} onBlur={() => markTouched("confirmPassword")} autoComplete="new-password" required error={errorFor("confirmPassword")} />
-                <button type="submit" disabled={isSubmitting}>{isSubmitting ? "Creating account. Hold on..." : "Register"}</button>
+                <button className="button auth__submit" type="submit" disabled={isSubmitting}>{isSubmitting ? "Creating account. Hold on..." : "Register"}</button>
             </form>
-            <p>Already have an account? <Link to="/login">Login instead</Link></p>
-        </main>
+            <p className="auth__switch">Already have an account? <Link to="/login">Login instead</Link></p>
+        </AuthLayout>
     );
 }

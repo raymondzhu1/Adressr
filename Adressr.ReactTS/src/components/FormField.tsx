@@ -1,3 +1,5 @@
+import "./FormField.css";
+
 interface FormFieldProps {
     id: string;
     label: string;
@@ -15,9 +17,9 @@ export function FormField({ id, label, value, onChange, onBlur, type="text", aut
     const errorId = `${id}-error`;
 
     return (
-        <div>
-            <label htmlFor="{id}">{label}</label>
-            <input
+        <div className="field">
+            <label className="field__label" htmlFor="{id}">{label}</label>
+            <input className="field__input"
                 id={id}
                 name={id}
                 type={type}
@@ -30,7 +32,7 @@ export function FormField({ id, label, value, onChange, onBlur, type="text", aut
                 aria-invalid={error ? true : undefined}
                 aria-describedby={error ? errorId : undefined}
             />
-            {error && <p id={errorId} role="alert">{error}</p>}
+            {error && <p className="field__error" id={errorId} role="alert">{error}</p>}
         </div>
     );
 }
