@@ -5,7 +5,7 @@ interface FormFieldProps {
     label: string;
     value: string;
     onChange: (value: string) => void;
-    onBlur: () => void;
+    onBlur?: () => void;
     type?: "text" | "email" | "password";
     autoComplete?: string;
     maxLength?: number;
