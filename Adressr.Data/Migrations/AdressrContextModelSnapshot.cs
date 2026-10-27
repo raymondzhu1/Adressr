@@ -593,11 +593,19 @@ namespace Adressr.Data.Migrations
                     b.Property<bool>("IsDone")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("ParentTaskID")
+                        .HasColumnType("int");
+
                     b.HasKey("WorkTaskID");
 
                     b.HasIndex("ExperienceID");
 
-                    b.ToTable("Tasks");
+                    b.HasIndex("ParentTaskID");
+
+                    b.ToTable("Tasks", t =>
+                        {
+                            t.HasCheckConstraint("CK_WorkTask_NotOwnParent", "[ParentTaskID] IS NULL OR [ParentTaskID] <> [WorkTaskID]");
+                        });
                 });
 
             modelBuilder.Entity("Adressr.Data.Model.WorkersToPosition", b =>
@@ -928,7 +936,14 @@ namespace Adressr.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Adressr.Data.Model.WorkTask", "ParentTask")
+                        .WithMany("SubTasks")
+                        .HasForeignKey("ParentTaskID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Experience");
+
+                    b.Navigation("ParentTask");
                 });
 
             modelBuilder.Entity("Adressr.Data.Model.WorkersToPosition", b =>
@@ -1092,6 +1107,11 @@ namespace Adressr.Data.Migrations
                     b.Navigation("Preference");
 
                     b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("Adressr.Data.Model.WorkTask", b =>
+                {
+                    b.Navigation("SubTasks");
                 });
 #pragma warning restore 612, 618
         }

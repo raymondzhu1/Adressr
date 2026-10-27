@@ -12,5 +12,7 @@ namespace Adressr.Library.Models
         public DateTime CreatedDate { get; set; }
 
         public DateTime? CompletedDate { get; set; }
+
+        public List<WorkTaskResponse> SubTasks { get; set; } = [];
     }
 }

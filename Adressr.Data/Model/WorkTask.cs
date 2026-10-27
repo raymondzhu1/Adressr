@@ -17,5 +17,11 @@ namespace Adressr.Data.Model
         public int ExperienceID { get; set; }
 
         public Experience Experience { get; set; } = null!;
+
+        public int? ParentTaskID { get; set; }
+
+        public WorkTask? ParentTask { get; set; }
+
+        public ICollection<WorkTask> SubTasks { get; set; } = new List<WorkTask>();
     }
 }
