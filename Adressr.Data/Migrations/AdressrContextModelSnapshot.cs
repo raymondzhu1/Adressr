@@ -30,6 +30,10 @@ namespace Adressr.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompanyID"));
 
+                    b.Property<string>("CompanyIconImageLocation")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(300)");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 

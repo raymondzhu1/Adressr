@@ -14,6 +14,8 @@ namespace Adressr.Data.Configurations
 
             builder.Property(x => x.Description).IsRequired();
 
+            builder.Property(x => x.CompanyIconImageLocation).IsRequired().HasColumnType("VARCHAR(300)");
+
             builder.HasOne(x => x.Creator).WithMany(u => u.Companies).HasForeignKey(x => x.CreatorID).OnDelete(DeleteBehavior.Restrict);
         }
     }

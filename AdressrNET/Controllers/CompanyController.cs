@@ -49,6 +49,13 @@ namespace AdressrNET.Controllers
             return response;
         }
 
+        [HttpGet("dashboard")]
+        public async Task<ActionResult<List<DashboardCompanyResponse>>> GetMyDashboardCompanies()
+        {
+            List<DashboardCompanyResponse> response = await _companyService.GetDashboardCompaniesByCreatorIdAsync(User.GetUserId());
+            return response;
+        }
+
         [HttpGet("{companyId:int}/positions")]
         public async Task<ActionResult<List<PositionResponse>>> GetPositions(int companyId)
         {

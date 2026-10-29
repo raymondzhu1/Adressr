@@ -7,6 +7,8 @@ namespace Adressr.Service
 {
     public class CompanyService : ICompanyService
     {
+        private const string DefaultCompanyLogoLocation = "/some/place/here/defaultCompanyLogo_small.png";
+
         private readonly ICompanyRepository _companyRepository;
 
         public CompanyService(ICompanyRepository companyRepository)
@@ -24,13 +26,24 @@ namespace Adressr.Service
             };
         }
 
+        private static DashboardCompanyResponse ToDashboardResponse(Company company)
+        {
+            return new DashboardCompanyResponse
+            {
+                CompanyID = company.CompanyID,
+                Name = company.Name,
+                CompanyIconImageLocation = company.CompanyIconImageLocation
+            };
+        }
+
         public async Task<CompanyResponse> CreateAsync(int creatorId, CompanyRequest companyRequest)
         {
             Company company = new Company
             {
                 Name = companyRequest.Name,
                 Description = companyRequest.Description,
-                CreatorID = creatorId
+                CreatorID = creatorId,
+                CompanyIconImageLocation = DefaultCompanyLogoLocation
             };
 
             await _companyRepository.AddAsync(company);
@@ -55,12 +68,12 @@ namespace Adressr.Service
         {
             List<Company> companyList = await _companyRepository.GetByCreatorIdAsync(creatorId);
             return companyList.Select(ToResponse).ToList();
-            //List<CompanyResponse> ToReturn = new List<CompanyResponse>();
-            //foreach (Company company in companyList)
-            //{
-            //    ToReturn.Add(ToResponse(company));
-            //}
-            //return ToReturn;
+        }
+
+        public async Task<List<DashboardCompanyResponse>> GetDashboardCompaniesByCreatorIdAsync(int creatorId)
+        {
+            List<Company> companyList = await _companyRepository.GetByCreatorIdAsync(creatorId);
+            return companyList.Select(ToDashboardResponse).ToList();
         }
     }
 }

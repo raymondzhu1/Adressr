@@ -7,5 +7,6 @@ namespace Adressr.Service.Interface
         Task<CompanyResponse> CreateAsync(int creatorUserId, CompanyRequest companyRequest);
         Task<CompanyResponse?> GetByIdAsync(int companyId);
         Task<List<CompanyResponse>> GetByCreatorIdAsync(int creatorUserId);
+        Task<List<DashboardCompanyResponse>> GetDashboardCompaniesByCreatorIdAsync(int creatorId);
     }
 }

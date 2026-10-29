@@ -45,6 +45,7 @@ builder.Services.AddScoped<IProfileInterestRepository, ProfileInterestRepository
 builder.Services.AddScoped<IProfileHobbyRepository, ProfileHobbyRepository>();
 builder.Services.AddScoped<IOpeningRepository, OpeningRepository>();
 builder.Services.AddScoped<IPositionRepository, PositionRepository>();
+builder.Services.AddScoped<IExamRepository, ExamRepository>();
 builder.Services.AddScoped<IRepositorySaver, RepositorySaver>();
 
 //Service layer configuration
@@ -55,6 +56,8 @@ builder.Services.AddScoped<IProfileService, ProfileService>();
 builder.Services.AddScoped<IExperienceService, ExperienceService>();
 builder.Services.AddScoped<IOpeningService, OpeningService>();
 builder.Services.AddScoped<IPositionService, PositionService>();
+builder.Services.AddScoped<IExamService, ExamService>();
+builder.Services.AddScoped<IWorkTaskService, WorkTaskService>();
 
 //Exception Handlers configured and triggered in order stated.
 builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();

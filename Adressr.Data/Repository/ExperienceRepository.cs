@@ -17,5 +17,10 @@ namespace Adressr.Data.Repository
         {
             return _context.Experiences.AsNoTracking().Where(exp => exp.ProfileID == profileId && exp.IsExported).OrderByDescending(exp => exp.StartDate).ToListAsync();
         }
+
+        public Task<List<Experience>> GetCurrentExperiencseByUserIdAsync(int userId)
+        {
+            return _context.Experiences.AsNoTracking().Where(exp => exp.Profile.UserID == userId && exp.EndDate == null).OrderByDescending(exp => exp.StartDate).ToListAsync();
+        }
     }
 }

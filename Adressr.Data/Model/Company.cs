@@ -10,6 +10,8 @@ namespace Adressr.Data.Model
 
         public required string Description { get; set; }
 
+        public required string CompanyIconImageLocation { get; set; }
+
         public DateTime CreationDate { get; set; } = DateTime.UtcNow;
 
         public int CreatorID { get; set; }

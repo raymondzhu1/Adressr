@@ -16,5 +16,14 @@ namespace Adressr.Data.Repository.Interface
         /// A list of experiences corresponding to the profile id given.
         /// </returns>
         Task<List<Experience>> GetExportedByProfileIdAsync(int profileId);
+
+        /// <summary>
+        /// Gets the list of experiences associated with the user of this user ID.
+        /// </summary>
+        /// <param name="userId">The User ID to search experiences for.</param>
+        /// <returns>
+        /// List of experiences associated with a specific user ID.
+        /// </returns>
+        Task<List<Experience>> GetCurrentExperiencseByUserIdAsync(int userId);
     }
 }
