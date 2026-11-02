@@ -10,6 +10,14 @@
   --muted: #5b6676;
   --line: #d5dbe3;
 
+  --panel: #10302f;
+  --panel-text: #e6f2ef;
+  --panel-muted: #a9c4be;
+  --panel-line: #2a5a56;
+  --panel-slip: #17413f;
+  --chip: #7fe0c3;
+  --chip-text: #0b2523;
+
   --accent: #0e7c66;
   --accent-hover: #0a6554;
   --accent-contrast: #ffffff;
@@ -96,6 +104,18 @@ a:hover {
 .button:disabled {
   opacity: 0.6;
   cursor: progress;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 @media(prefers-reduced-motion: reduce) {

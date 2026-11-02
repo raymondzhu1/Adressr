@@ -10,7 +10,7 @@ namespace Adressr.Service
         private readonly IExperienceRepository _experienceRepository;
         private readonly IWorkTaskRepository _workTaskRepository;
 
-        private const int MaxTasksPerExperience = 5;
+        private const int MaxTasksPerExperienceForDashboard = 5;
 
         public WorkTaskService(IExperienceRepository experienceRepository, IWorkTaskRepository workTaskRepository)
         {
@@ -36,6 +36,7 @@ namespace Adressr.Service
             {
                 ILookup<int?, WorkTask> parentLookup = lookupTaskByExpID[exp.ExperienceID].ToLookup(task => task.ParentTaskID);
                 List<WorkTask> openTasks = parentLookup[null].Where(task => !task.IsDone).OrderBy(task => task.CreatedDate).ToList();
+                int taskCounter = 0;
 
                 return new DashboardExpTaskResponse
                 {
@@ -43,12 +44,25 @@ namespace Adressr.Service
                     CompanyName = exp.CompanyName,
                     RoleTitle = exp.RoleTitle,
                     OpenTaskCount = openTasks.Count,
-                    Tasks = openTasks.Take(MaxTasksPerExperience).Select(task => new DashboardTaskMiniResponse
+                    Tasks = openTasks.TakeWhile(task => taskCounter < MaxTasksPerExperienceForDashboard).Select(task => 
                     {
-                        WorkTaskID = task.WorkTaskID,
-                        Description = task.Description,
-                        SubTasksTotal = parentLookup[task.WorkTaskID].Count(),
-                        SubTasksDone = parentLookup[task.WorkTaskID].Count(sub => sub.IsDone)
+                        taskCounter++;
+                        return new DashboardTaskMiniResponse
+                        {
+                            WorkTaskID = task.WorkTaskID,
+                            Description = task.Description,
+                            IsDone = task.IsDone,
+                            SubTasks = parentLookup[task.WorkTaskID].OrderBy(sub => sub.CreatedDate).TakeWhile(sub => taskCounter < MaxTasksPerExperienceForDashboard).Select(sub =>
+                            {
+                                taskCounter++;
+                                return new DashboardSubTaskResponse
+                                {
+                                    WorkTaskID = sub.WorkTaskID,
+                                    Description = sub.Description,
+                                    IsDone = task.IsDone
+                                };
+                            }).ToList()
+                        };
                     }).ToList()
                 };
             }).Where(group => group.OpenTaskCount > 0).ToList();

@@ -1,5 +1,7 @@
 import type { ProblemDetails } from "./types/Error/problem.type";
 
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
+
 export class ApiError extends Error {
     readonly status: number;
     readonly problem: ProblemDetails | null;
@@ -24,20 +26,28 @@ async function readBody(response: Response): Promise<unknown> {
     }
 }
 
-export async function post<TResponse>(path: string, payload:unknown): Promise<TResponse> {
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
-
-    const response = await fetch(`${API_BASE_URL}${path}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    });
-
+async function request<TResponse>(path: string, init: RequestInit): Promise<TResponse> {
+    const response = await fetch(`${API_BASE_URL}${path}`, init);
     const body = await readBody(response);
 
-    if(!response.ok) {
+    if(!response.ok){
         throw new ApiError(response.status, body as ProblemDetails | null);
     }
 
     return body as TResponse;
 }
+
+export const post = <TResponse>(path: string, payload: unknown) =>
+    request<TResponse>(path, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    });
+
+export const get = <TResponse>(path: string, token: string) =>
+    request<TResponse>(path, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+
+export const assetUrl = (location: string) =>
+    /^https?:\/\//.test(location) ? location : `${API_BASE_URL}${location}`;

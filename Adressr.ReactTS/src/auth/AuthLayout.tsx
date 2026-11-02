@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { SampleExperience } from "../components/SampleExperience";
 import "./auth.css";
 
 interface AuthLayoutProps {
@@ -19,7 +20,10 @@ export function AuthLayout({ title, children }: AuthLayoutProps) {
                     </p>
                 </div>
 
-                <div className="log" aria-hidden="true">
+                <div className="auth__sample" aria-hidden="true">
+                    <SampleExperience compact />
+                </div>
+                {/* <div className="log" aria-hidden="true">
                     <div className="log__head">
                         <span>SAMPLE TEXT JOB TITLE</span>
                         <span className="log__chip">On your profile</span>
@@ -29,7 +33,7 @@ export function AuthLayout({ title, children }: AuthLayoutProps) {
                         <li className="log__task log__task--done">TASK TWO</li>
                         <li className="log__task">CURRENT TASK DOING</li>
                     </ul>
-                </div>
+                </div> */}
             </aside>
 
             <main className="auth__main">

@@ -1,0 +1,188 @@
+.headerbar, .dashboard__main {
+    width: 100%;
+    max-width: 60rem;
+    margin: 0 auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+
+.headerbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.header__brand {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.header__logout {
+    padding: 0.375rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.header__logout:hover {
+    border-color: var(--muted);
+}
+
+.dashboard__main {
+    display: grid;
+    gap: 1.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 3rem;
+}
+
+.dashboard__title {
+    font-size: 1.5rem;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+}
+
+/* General Panels */
+.panel {
+    padding: 1.5rem;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--surface);
+}
+
+.panel__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.panel__title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.panel__action {
+    font-size: 0.9375rem;
+    font-weight: 600;
+}
+
+.panel__empty {
+    color: var(--muted);
+}
+
+.panel__status {
+    display: grid;
+    justify-items: start;
+    gap: 0.75rem;
+    color: var(--muted);
+}
+
+/*Company panel CSS */
+.companies {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.company {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    color: inherit;
+    text-decoration: none;
+    transition: border-color 120ms ease;
+}
+
+.company:hover {
+    border-color: var(--accent);
+}
+
+.company__icon {
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 8px;
+    background: var(--ground);
+    object-fit: cover;
+}
+
+.company__name {
+    font-weight: 650;
+    overflow-wrap: anywhere;
+}
+
+/* Task panel css */
+.task-experiences {
+    display: grid;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.task-experience__title {
+    font-size: 1rem;
+    font-weight: 650;
+}
+
+.task-experience__company {
+    color: var(--muted);
+    font-weight: 450;
+}
+
+.task-experience__more {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.9375rem;
+}
+
+/* Exam panel CSS */
+.exams {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.exam {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.875rem 0;
+}
+
+.exam:first-child {
+    padding-top: 0;
+}
+
+.exam:last-child {
+    padding-bottom: 0;
+}
+
+.exam:not(:first-child) {
+    border-top: 1px solid var(--line);
+}
+
+.exam__title {
+    font-weight: 650;
+    overflow-wrap: anywhere;
+}
+
+.exam__meta {
+    color: var(--muted);
+    font-size: 0.9375rem;
+}

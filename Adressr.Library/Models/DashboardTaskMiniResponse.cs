@@ -4,7 +4,7 @@
     {
         public int WorkTaskID { get; set; }
         public required string Description { get; set; }
-        public int SubTasksDone { get; set; }
-        public int SubTasksTotal { get; set; }
+        public bool IsDone { get; set; }
+        public List<DashboardSubTaskResponse> SubTasks { get; set; } = [];
     }
 }

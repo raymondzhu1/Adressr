@@ -1,0 +1,142 @@
+.landing__bar, .simpleTask, .offers {
+    width: 100%;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+
+.landing__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.landing__brand {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.simpleTask {
+    display: grid;
+    gap: 3rem;
+    align-items: center;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+.simpleTask__title {
+    max-width: 18ch;
+    font-size: clamp(2.25rem, 1.4rem + 3.2vw, 3.75rem);
+    font-weight: 780;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    text-wrap: balance;
+}
+
+.simpleTask__lead {
+    max-width: 36ch;
+    margin-top: 1.25rem;
+    color: var(--muted);
+    font-size: 1.125rem;
+}
+
+.simpleTask__actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 2rem;
+}
+
+.simpleTask__demo {
+    padding: 2rem;
+    border-radius: 20px;
+    background: var(--panel);
+}
+
+.simpleTask__demo:focus-visible {
+    outline-color: var(--chip);
+}
+
+.simpleTask__caption {
+    margin-top: 1rem;
+    color: var(--panel-muted);
+    font-size: 0.9375rem;
+}
+
+.entry__bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.75rem;
+}
+
+.entry__state {
+    padding: 0.125rem 0.625rem;
+    border: 1px solid var(--panel-muted);
+    border-radius: 1000px;
+    color: var(--panel-muted);
+    font-size: 0.8125rem;
+    white-space: nowrap;
+}
+
+.entry__state--public {
+    background: var(--chip);
+    border-color: var(--chip); /* check if this border color works with background. It's the same, so probably wont work well. */
+    color: var(--chip-text);
+}
+
+.entry__publish {
+    width: 100%;
+    min-height: 2.5rem;
+    border: 1px solid var(--chip);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--chip);
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+    transition: background-color 120ms ease;
+    margin-top: 1rem;
+}
+
+.entry__publish:hover {
+    background: rgb(127 224 195 / 0.12);
+}
+
+.offers {
+    display: grid;
+    gap: 2rem;
+    padding-top: 2rem;
+    padding-bottom: 5rem;
+}
+
+.offer {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+}
+
+.offer__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.offer__text {
+    max-width: 34ch;
+    margin-top: 0.5rem;
+    color: var(--muted);
+}
+
+@media (min-width: 60rem) {
+    .simpleTask {
+        grid-template-columns: 1fr 1fr;
+        padding-top: 4rem;
+    }
+    .offers {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+    }
+}
