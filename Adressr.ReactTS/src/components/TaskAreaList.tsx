@@ -14,7 +14,7 @@ function StatusLine({ done, text }: {done: boolean; text: string; }) {
 
 function TaskArea({ task }: { task: DashboardTaskMiniResponse }) {
     return(
-        <li className="task-area">
+        <li className={task.isDone ? "task-area task-area--complete" : "task-area"}>
             <div className="task-area__row">
                 <StatusLine done={task.isDone} text={task.description} />
             </div>

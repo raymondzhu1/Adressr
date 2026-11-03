@@ -8,22 +8,23 @@ const TASKS: DashboardTaskMiniResponse[] = [
         description: "TASK1",
         isDone: true,
         subTasks: [
-            {workTaskID: 2, description: "SUBTASK1", isDone: true},
-            {workTaskID: 3, description: "SUBTASK2", isDone: true}
+            {workTaskID: 2, description: "Hi this is an actual subtask text, and totally finished this subtask. Woo?", isDone: true},
+            {workTaskID: 3, description: "SUBTASK2", isDone: true},
+            {workTaskID: 4, description: "SUBTASK3", isDone: true}
         ]
     },
     {
-        workTaskID: 4,
+        workTaskID: 5,
         description: "TASK2",
         isDone: true,
         subTasks: []
     },
     {
-        workTaskID: 5,
+        workTaskID: 6,
         description: "TASK3",
         isDone: false,
         subTasks: [
-            {workTaskID: 6, description: "SUBTASK3", isDone: false}
+            {workTaskID: 7, description: "SUBTASK4", isDone: false}
         ]
     }
 ];

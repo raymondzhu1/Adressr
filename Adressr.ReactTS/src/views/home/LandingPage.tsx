@@ -1,5 +1,6 @@
 import { Link } from "react-router";
-import { TaskDemo } from "./TaskDemo";
+//import { TaskDemo } from "./TaskDemo";
+import { SampleExperience } from "../../components/SampleExperience";
 import "./landing.css";
 
 //Gotta really make a global header bar so we don't need to define it here again.
@@ -24,9 +25,10 @@ export function LandingPage() {
                         </div>
                     </div>
 
-                    <div className="simpleTask__demo">
+                    <SampleExperience />
+                    {/* <div className="simpleTask__demo">
                         <TaskDemo />
-                    </div>
+                    </div> */}
                 </section>
 
                 <section className="offers">

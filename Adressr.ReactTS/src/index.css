@@ -9,14 +9,18 @@
   --text: #17202e;
   --muted: #5b6676;
   --line: #d5dbe3;
+  --border: #0c0c0c;
 
-  --panel: #10302f;
-  --panel-text: #e6f2ef;
-  --panel-muted: #a9c4be;
-  --panel-line: #2a5a56;
-  --panel-slip: #17413f;
+  --adressr-green: #10302f;
+  --adressr-green-text: #e6f2ef;
+  --adressr-green-muted: #a9c4be;
+  --adressr-green-line: #2a5a56;
+  --adressr-green-slip: #17413f;
   --chip: #7fe0c3;
   --chip-text: #0b2523;
+
+  --panel: #fff;
+  --panel-inner: #fff;
 
   --accent: #0e7c66;
   --accent-hover: #0a6554;
@@ -34,6 +38,10 @@
     --text: #e8ecf2;
     --muted: #9aa6b8;
     --line: #2a3547;
+    --border: #4d5251;
+
+    --panel: #000;
+    --panel-inner: #0e0016;
 
     --accent: #2fbf9b;
     --accent-hover: #4ccdad;

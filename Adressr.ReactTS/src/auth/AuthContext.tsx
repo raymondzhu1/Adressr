@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { useCallback, createContext, useContext, useState, type ReactNode } from "react";
 
 const TOKEN_KEY = "adressr_token";
 
@@ -14,15 +14,15 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [token, setToken] = useState<string | null>(() => localStorage.getItem(TOKEN_KEY));
 
-    const signIn = (newToken: string) => {
+    const signIn = useCallback((newToken: string) => {
         localStorage.setItem(TOKEN_KEY, newToken);
         setToken(newToken);
-    };
+    }, []);
 
-    const signOut = () => {
+    const signOut = useCallback(() => {
         localStorage.removeItem(TOKEN_KEY);
         setToken(null);
-    };
+    }, []);
 
     return (
         <AuthContext value={{ token, isAuthenticated: token !== null, signIn, signOut }}>

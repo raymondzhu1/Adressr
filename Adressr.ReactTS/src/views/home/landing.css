@@ -54,17 +54,11 @@
 .simpleTask__demo {
     padding: 2rem;
     border-radius: 20px;
-    background: var(--panel);
+    background: var(--adressr-green);
 }
 
 .simpleTask__demo:focus-visible {
     outline-color: var(--chip);
-}
-
-.simpleTask__caption {
-    margin-top: 1rem;
-    color: var(--panel-muted);
-    font-size: 0.9375rem;
 }
 
 .entry__bar {
@@ -75,9 +69,9 @@
 
 .entry__state {
     padding: 0.125rem 0.625rem;
-    border: 1px solid var(--panel-muted);
+    border: 1px solid var(--adressr-green-muted);
     border-radius: 1000px;
-    color: var(--panel-muted);
+    color: var(--adressr-green-muted);
     font-size: 0.8125rem;
     white-space: nowrap;
 }
@@ -99,7 +93,7 @@
     font-weight: 650;
     cursor: pointer;
     transition: background-color 120ms ease;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .entry__publish:hover {
