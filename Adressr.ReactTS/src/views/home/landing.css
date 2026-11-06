@@ -1,23 +1,9 @@
-.landing__bar, .simpleTask, .offers {
+.simpleTask, .offers {
     width: 100%;
     max-width: 72rem;
     margin: 0 auto;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
-}
-
-.landing__bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-}
-
-.landing__brand {
-    font-size: 1.25rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
 }
 
 .simpleTask {

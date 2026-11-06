@@ -11,8 +11,6 @@ export function AuthLayout({ title, children }: AuthLayoutProps) {
     return(
         <div className="auth">
             <aside className="auth__panel">
-                <span className="auth__brand">Adressr</span>
-
                 <div>
                     <p className="auth__pitch">Log your work and stuff. Do company tracking stuff. Resume management. WOOOO!</p>
                     <p className="auth__support">
@@ -23,17 +21,6 @@ export function AuthLayout({ title, children }: AuthLayoutProps) {
                 <div className="auth__sample" aria-hidden="true">
                     <SampleExperience compact />
                 </div>
-                {/* <div className="log" aria-hidden="true">
-                    <div className="log__head">
-                        <span>SAMPLE TEXT JOB TITLE</span>
-                        <span className="log__chip">On your profile</span>
-                    </div>
-                    <ul className="log__tasks">
-                        <li className="log__task log__task--done">TASK ONE</li>
-                        <li className="log__task log__task--done">TASK TWO</li>
-                        <li className="log__task">CURRENT TASK DOING</li>
-                    </ul>
-                </div> */}
             </aside>
 
             <main className="auth__main">
