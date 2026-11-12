@@ -66,9 +66,11 @@
   border-color: var(--muted);
 }
 
+/* Add CSS for Search button. Make similar to logout button css */
+
 @media (min-width: 40rem) {
   .site-header__inner {
-    grid-template-columns: 1fr minmax(0, 32rem) 1fr;
+    grid-template-columns: 1fr minmax(0, 50rem) 1fr;
     grid-template-areas: "brand search action";
   }
   .site-header__search {

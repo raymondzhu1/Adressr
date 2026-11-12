@@ -26,8 +26,13 @@ async function readBody(response: Response): Promise<unknown> {
     }
 }
 
-async function request<TResponse>(path: string, init: RequestInit): Promise<TResponse> {
-    const response = await fetch(`${API_BASE_URL}${path}`, init);
+async function request<TResponse>(path: string, init: RequestInit, token?: string): Promise<TResponse> {
+    const headers = new Headers(init.headers);
+    if(token) {
+        headers.set("Authorization", `Bearer ${token}`);
+    }
+
+    const response = await fetch(`${API_BASE_URL}${path}`, {...init, headers});
     const body = await readBody(response);
 
     if(!response.ok){
@@ -37,17 +42,31 @@ async function request<TResponse>(path: string, init: RequestInit): Promise<TRes
     return body as TResponse;
 }
 
-export const post = <TResponse>(path: string, payload: unknown) =>
+export const post = <TResponse>(path: string, payload: unknown, token?: string, signal?: AbortSignal) =>
     request<TResponse>(path, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    });
+        headers: { 
+            "Content-Type": "application/json",
+            "Accept" : "application/json"
+         },
+        body: JSON.stringify(payload),
+        signal
+    }, token);
 
-export const get = <TResponse>(path: string, token: string) =>
+export const get = <TResponse>(path: string, token?: string, signal?: AbortSignal) =>
     request<TResponse>(path, {
-        headers: { Authorization: `Bearer ${token}` }
-    });
+        method: "GET",
+        headers: { 
+            "Accept": "application/json"
+        },
+        signal
+    }, token);
+
+// export const anonymousGet = <TResponse>(path: string) => 
+//     request<TResponse>(path, {
+//         method: "GET",
+//         headers: { "Content-Type": "application/json" }
+//     });
 
 export const assetUrl = (location: string) =>
     /^https?:\/\//.test(location) ? location : `${API_BASE_URL}${location}`;

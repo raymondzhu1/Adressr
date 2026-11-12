@@ -1,4 +1,5 @@
 ﻿using Adressr.Data.Model;
+using Adressr.Library.Models;
 
 namespace Adressr.Data.Repository.Interface
 {
@@ -25,5 +26,36 @@ namespace Adressr.Data.Repository.Interface
         /// List of experiences associated with a specific user ID.
         /// </returns>
         Task<List<Experience>> GetCurrentExperiencseByUserIdAsync(int userId);
+
+        /// <summary>
+        /// Adds the given Experience to the DB.
+        /// </summary>
+        /// <param name="experience">The experience to save to database.</param>
+        /// <returns>
+        /// Task to await on.
+        /// </returns>
+        Task AddAsync(Experience experience);
+
+        /// <summary>
+        /// Updates the Experience's basic properties: CompanyName, RoleTitle, Description, StartDate, EndDate(if available).
+        /// </summary>
+        /// <param name="experience">
+        /// The experience used to update the experience in the database.
+        /// </param>
+        /// <returns>
+        /// The updated experience entry that is to be updated in the database. Returns null if no corresponding experience exists.
+        /// </returns>
+        Task<Experience?> UpdateGeneralAsync(Experience experience);
+
+        /// <summary>
+        /// Updates the Experience's publicity on your profile.
+        /// </summary>
+        /// <param name="request">
+        /// Custom DTO for an experience's publicity request. Contains the ID of the experience to change and whether or not to export to the associated user's profile.
+        /// </param>
+        /// <returns>
+        /// The updated experience entry to be updated in the database. Returns null if no corresponding experience exists.
+        /// </returns>
+        Task<Experience?> UpdatePublicityAsync(ExperiencePublicityRequest request);
     }
 }

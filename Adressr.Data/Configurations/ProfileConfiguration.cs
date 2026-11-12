@@ -12,6 +12,8 @@ namespace Adressr.Data.Configurations
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
 
+            builder.HasIndex(x => x.Name);
+
             builder.Property(x => x.ProfilePicLocation).IsRequired().HasColumnType("VARCHAR(300)");
 
             builder.Property(x => x.Education).IsRequired().HasMaxLength(70);

@@ -5,6 +5,33 @@ namespace Adressr.Data.Repository.Interface
     public interface ISkillRepository
     {
         /// <summary>
+        /// Adds a skill to the database.
+        /// </summary>
+        /// <param name="skill">Skill to add to database.</param>
+        /// <returns>
+        /// Task to await on.
+        /// </returns>
+        Task AddAsync(Skill skill);
+
+        /// <summary>
+        /// Adds a skill to the list of skills in the DbSet, but does not add it to the database immediately.
+        /// </summary>
+        /// <param name="skill">Skill to add</param>
+        /// <returns>
+        /// Task to await on.
+        /// </returns>
+        Task AddLaterAsync(Skill skill);
+
+        /// <summary>
+        /// Gets a skill object by the name of the skill.
+        /// </summary>
+        /// <param name="name">The name of the skill.</param>
+        /// <returns>
+        /// The skill object that has the matching name given through the parameter. If none found it will be null.
+        /// </returns>
+        Task<Skill?> GetSkillAsync(string name);
+
+        /// <summary>
         /// Get skills associated with this experience based on the experience ID. This looks through the junction table between Experience and Skill using a skip navigation.
         /// </summary>
         /// <param name="readOnlyExperienceIds">

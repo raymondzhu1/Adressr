@@ -1,11 +1,12 @@
 import { useEffect, useId, useState } from "react";
+import { useNavigate } from "react-router";
 import { Link } from "react-router";
 import { assetUrl } from "../client";
-import { useAuthorizedGet } from "../auth/useAuthorizedGet";
+import { usePublicGet } from "../auth/useAuthorizedGet";
 import type { SearchResult } from "../types/Search/search.types";
 import "./search.css";
 
-const MIN_LENGTH = 2;
+const MIN_LENGTH = 1;
 
 function useDebounced(value: string, delayMs: number) {
     //Sets up the debouncing for our search so we aren't firing requests super often.
@@ -21,12 +22,13 @@ function useDebounced(value: string, delayMs: number) {
 
 export function SearchBox() {
     const listId = useId();
+    const navigate = useNavigate();
     const [text, setText] = useState("");
     const [open, setOpen] = useState(false);
 
     const term = useDebounced(text.trim(), 250);
     const active = term.length >= MIN_LENGTH;
-    const query = useAuthorizedGet<SearchResult[]>(active ? `/api/search?query=${encodeURIComponent(term)}` : null);
+    const query = usePublicGet<SearchResult[]>(active ? `/api/search?query=${encodeURIComponent(term)}` : null);
 
     const close = () => {
         setOpen(false);
@@ -63,24 +65,29 @@ export function SearchBox() {
     const showResults = open && active;
 
     return(
-        <div className="search" 
+        <div className="search"
+            role="search"
             onBlur={(event) => {
                 if(!event.currentTarget.contains(event.relatedTarget)){
                     setOpen(false);
                 }}}
             onKeyDown={(event) => {
                 if(event.key === "Escape"){
+                    console.log("im here");
                     setOpen(false);
                 }
             }}
         >
-            <input className="search__input" type="search" placeholder="Search users and companies" aria-label="Search users and companies" aria-controls={showResults ? listId : undefined} autoComplete="off" value={text} 
-                onChange={(event) => {
-                    setText(event.target.value);
-                    setOpen(true);
-                }}
-                onFocus={() => setOpen(true)} 
-            />
+            <div className="search__inputarea">
+                <input className="search__input" type="search" placeholder="Search users and companies" aria-label="Search users and companies" aria-controls={showResults ? listId : undefined} autoComplete="off" value={text} 
+                    onChange={(event) => {
+                        setText(event.target.value);
+                        setOpen(true);
+                    }}
+                    onFocus={() => setOpen(true)} 
+                />
+                <button type="button" onClick={() => navigate(`/search?query=${encodeURIComponent(term)}`)}>Search</button>
+            </div>
             {showResults && (
                 <div id={listId} className="search__results" onMouseDown={(event) => event.preventDefault()}>
                     {renderResults()}

@@ -35,7 +35,7 @@ interface SampleExperienceProps {
 
 export function SampleExperience({ compact = false }: SampleExperienceProps) {
     return(
-        <ExperienceArea companyName="Adressr" roleTitle="Fullstack Engineer" description="Make the whole website. Good luck.">
+        <ExperienceArea companyName="Adressr" roleTitle="Fullstack Engineer" description="Make the whole website. Good luck." startDate="September 27 2026" endDate={null}>
             <TaskAreaList tasks={compact ? [TASKS[0], TASKS[2]] : TASKS} />
         </ExperienceArea>
     );

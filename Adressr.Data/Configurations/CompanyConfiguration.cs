@@ -12,6 +12,8 @@ namespace Adressr.Data.Configurations
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(30);
 
+            builder.HasIndex(x => x.Name);
+
             builder.Property(x => x.Description).IsRequired();
 
             builder.Property(x => x.CompanyIconImageLocation).IsRequired().HasColumnType("VARCHAR(300)");

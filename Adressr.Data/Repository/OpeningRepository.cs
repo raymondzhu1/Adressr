@@ -13,6 +13,13 @@ namespace Adressr.Data.Repository
             _context = context;
         }
 
+        public async Task AddAsync(Opening opening)
+        {
+            _context.Openings.Add(opening);
+            await _context.SaveChangesAsync();
+            return;
+        }
+
         public Task<List<Opening>> GetOpeningsByCompanyIdAsync(int companyId)
         {
             return _context.Openings.AsNoTracking().Where(opening => opening.CompanyID == companyId).OrderByDescending(opening => opening.CreatedDate).ToListAsync();

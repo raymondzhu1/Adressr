@@ -9,7 +9,7 @@ export function ExperienceList({ experiences }: { experiences: ExperienceRespons
         <ul className="experience-list">
             {experiences.map((experience) => (
                 <li key={experience.experienceID}>
-                    <ExperienceArea companyName={experience.companyName} roleTitle={experience.roleTitle} description={experience.description}>
+                    <ExperienceArea companyName={experience.companyName} roleTitle={experience.roleTitle} description={experience.description} startDate={experience.startDate} endDate={experience.endDate}>
                         <TaskAreaList tasks={[...experience.currentTasks, ...experience.previousTasks]} />
                     </ExperienceArea>
                 </li>

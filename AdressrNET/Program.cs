@@ -58,6 +58,7 @@ builder.Services.AddScoped<IOpeningService, OpeningService>();
 builder.Services.AddScoped<IPositionService, PositionService>();
 builder.Services.AddScoped<IExamService, ExamService>();
 builder.Services.AddScoped<IWorkTaskService, WorkTaskService>();
+builder.Services.AddScoped<ISearchService, SearchService>();
 
 //Exception Handlers configured and triggered in order stated.
 builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();

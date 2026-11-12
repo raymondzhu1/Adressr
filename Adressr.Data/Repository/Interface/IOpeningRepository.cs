@@ -4,6 +4,7 @@ namespace Adressr.Data.Repository.Interface
 {
     public interface IOpeningRepository
     {
+        Task AddAsync(Opening opening);
         Task<List<Opening>> GetOpeningsByCompanyIdAsync(int companyId);
 
         Task<int> GetNumberOfOpeningsByPositionIdAsync(int positionId);

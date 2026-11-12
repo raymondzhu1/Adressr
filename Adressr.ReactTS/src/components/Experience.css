@@ -1,3 +1,42 @@
+.entry__bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.75rem;
+}
+
+.entry__state {
+    padding: 0.125rem 0.625rem;
+    border: 1px solid var(--adressr-green-muted);
+    border-radius: 1000px;
+    color: var(--adressr-green-muted);
+    font-size: 0.8125rem;
+    white-space: nowrap;
+}
+
+.entry__state--public {
+    background: var(--chip);
+    border-color: var(--chip); /* check if this border color works with background. It's the same, so probably wont work well. */
+    color: var(--chip-text);
+}
+
+.entry__publish {
+    width: 100%;
+    min-height: 2.5rem;
+    border: 1px solid var(--chip);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--chip);
+    font: inherit;
+    font-weight: 650;
+    cursor: pointer;
+    transition: background-color 120ms ease;
+    margin-top: 2rem;
+}
+
+.entry__publish:hover {
+    background: rgb(127 224 195 / 0.12);
+}
+
 .experience-list {
     display: grid;
     gap: 1rem;
@@ -24,7 +63,7 @@
 
 .experience--deep {
     /* Do something with deep here. This is a placeholder for actual theme changes for the experience panel. */
-    --area-bg: #000;
+    --area-bg: #701111;
 }
 
 .experience__company {
@@ -37,8 +76,15 @@
     color: var(--area-muted);
 }
 
-.experience__description {
+.experience__description, .experience__tenure {
     max-width: 65ch;
+}
+
+.experience__tenure {
+    font-weight: 550;
+}
+
+.experience__description {
     margin-top: 0.75rem;
     white-space: pre-line;
 }

@@ -15,6 +15,10 @@
     transition: border-color 120ms ease, box-shadow 120ms ease;
 }
 
+.search__inputarea {
+    display: flex;
+}
+
 .search__input:hover {
     border-color: var(--muted);
 }

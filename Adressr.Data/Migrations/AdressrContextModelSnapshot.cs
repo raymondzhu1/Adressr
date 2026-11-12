@@ -53,6 +53,8 @@ namespace Adressr.Data.Migrations
 
                     b.HasIndex("CreatorID");
 
+                    b.HasIndex("Name");
+
                     b.ToTable("Companies");
                 });
 
@@ -404,6 +406,8 @@ namespace Adressr.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ProfileID");
+
+                    b.HasIndex("Name");
 
                     b.HasIndex("UserID")
                         .IsUnique();
