@@ -31,6 +31,12 @@ namespace Adressr.Data.Repository
             return _context.Experiences.AsNoTracking().Where(exp => exp.Profile.UserID == userId && exp.EndDate == null).OrderByDescending(exp => exp.StartDate).ToListAsync();
         }
 
+        public Task<List<Experience>> GetAllExperienceByUserIdAsync(int userId)
+        {
+            //Could've probably done some kind of factory design pattern with GetCurrentExperiences, but I'll just throw this in for now.
+            return _context.Experiences.AsNoTracking().Where(exp => exp.Profile.UserID == userId).OrderByDescending(exp => exp.StartDate).ToListAsync();
+        }
+
         public async Task<Experience?> UpdateGeneralAsync(Experience experience)
         {
             //This is but one part of the update process, so no SaveChangesAsync() at the end here, otherwise this whole process is not atomic. Still need to update work tasks and maybe skills.

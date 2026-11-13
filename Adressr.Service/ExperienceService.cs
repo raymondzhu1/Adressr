@@ -100,6 +100,12 @@ namespace Adressr.Service
             return await BuildResponseAsync(experiences);
         }
 
+        public async Task<List<ExperienceResponse>> GetExperiencesForManager(int userId)
+        {
+            List<Experience> results = await _experienceRepository.GetAllExperienceByUserIdAsync(userId);
+            return await BuildResponseAsync(results);
+        }
+
         public async Task<ExperienceResponse> AddExperienceAsync(int userId, CreateExperienceRequest request)
         {
             Profile? profile = await _profileRepository.GetByUserIdAsync(userId);

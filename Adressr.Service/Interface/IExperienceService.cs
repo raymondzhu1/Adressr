@@ -6,6 +6,8 @@ namespace Adressr.Service.Interface
     {
         Task<List<ExperienceResponse>> GetExperiencesExportedByProfileIdAsync(int profileId);
 
+        Task<List<ExperienceResponse>> GetExperiencesForManager(int userId);
+
         Task<ExperienceResponse> AddExperienceAsync(int userId, CreateExperienceRequest request);
     }
 }

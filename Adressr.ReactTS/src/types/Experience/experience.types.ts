@@ -1,5 +1,5 @@
-import type { WorkTaskResponse } from "../Task/task.types";
-import type { SkillResponse } from "../Skill/skill.types";
+import type { CreateWorkTaskRequest, WorkTaskResponse } from "../Task/task.types";
+import type { SkillRequest, SkillResponse } from "../Skill/skill.types";
 
 export interface ExperienceResponse {
     experienceID: number;
@@ -12,4 +12,14 @@ export interface ExperienceResponse {
     skills: SkillResponse[];
     previousTasks: WorkTaskResponse[];
     currentTasks: WorkTaskResponse[];
+}
+
+export interface CreateExperienceRequest {
+    companyName: string;
+    roleTitle: string;
+    description: string;
+    startDate: string;
+    endDate: string | null;
+    skills: SkillRequest[];
+    tasks: CreateWorkTaskRequest[];
 }

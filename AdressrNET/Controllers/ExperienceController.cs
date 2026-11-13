@@ -18,6 +18,13 @@ namespace AdressrNET.Controllers
             _experienceService = experienceService;
         }
 
+        [HttpGet("experiencemanager")]
+        public async Task<ActionResult<List<ExperienceResponse>>> GetExperiences()
+        {
+            List<ExperienceResponse> response = await _experienceService.GetExperiencesForManager(User.GetUserId());
+            return response;
+        }
+
         [HttpPost("experiencemanager")]
         public async Task<ActionResult<ExperienceResponse>> AddExperience(CreateExperienceRequest request)
         {

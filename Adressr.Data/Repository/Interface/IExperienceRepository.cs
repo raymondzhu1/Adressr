@@ -23,9 +23,18 @@ namespace Adressr.Data.Repository.Interface
         /// </summary>
         /// <param name="userId">The User ID to search experiences for.</param>
         /// <returns>
-        /// List of experiences associated with a specific user ID.
+        /// List of current experiences associated with a specific user ID.
         /// </returns>
         Task<List<Experience>> GetCurrentExperiencseByUserIdAsync(int userId);
+
+        /// <summary>
+        /// Gets all of the experiences of the user given.
+        /// </summary>
+        /// <param name="userId">The User ID to search experiences for.</param>
+        /// <returns>
+        /// List of experiences associated with this specific user ID.
+        /// </returns>
+        Task<List<Experience>> GetAllExperienceByUserIdAsync(int userId);
 
         /// <summary>
         /// Adds the given Experience to the DB.

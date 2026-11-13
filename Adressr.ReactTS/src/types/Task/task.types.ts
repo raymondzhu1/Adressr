@@ -24,3 +24,9 @@ export interface WorkTaskResponse extends DashboardTaskMiniResponse {
     completedDate: string | null;
     subTasks: WorkTaskResponse[];
 }
+
+export interface CreateWorkTaskRequest {
+    description: string;
+    isDone: boolean;
+    subTasks: CreateWorkTaskRequest[];
+}
