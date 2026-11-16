@@ -88,7 +88,7 @@ export function SearchBox() {
                 <button type="button" onClick={() => navigate(`/search?query=${encodeURIComponent(term)}`)}>Search</button>
             </div>
             {showResults && (
-                <div id={listId} className="search__results" onMouseDown={(event) => event.preventDefault()}>
+                <div id={listId} className="search__results">
                     {renderResults()}
                 </div>
             )}
