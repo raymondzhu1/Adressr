@@ -16,7 +16,7 @@ export function ExperienceManager() {
     }
 
     if(query.isLoading) {
-        <p>Loading experiences....</p>;
+        return <p>Loading experiences....</p>;
     }
 
     if(query.isError) {

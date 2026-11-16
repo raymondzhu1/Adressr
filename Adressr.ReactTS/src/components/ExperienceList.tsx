@@ -19,20 +19,22 @@ type ExperienceListProps =
 export function ExperienceList({ experiences, variant } : ExperienceListProps) { //{ experiences }: { experiences: ExperienceResponse[] }
     if(variant === "dashboard")
     {
-        <ul className="task-experiences">
-            {experiences.map((experience) => (
-                <li key={experience.experienceID}>
-                    <ExperienceArea companyName={experience.companyName} roleTitle={experience.roleTitle}>
-                        <TaskAreaList tasks={experience.tasks} />
-                        {experience.openTaskCount > experience.tasks.length && (
-                            <Link className="task-experience__more" to="/experiencemanager">
-                                { experience.openTaskCount - experience.tasks.length } more open tasks
-                            </Link>
-                        )}
-                    </ExperienceArea>
-                </li>
-            ))}
-        </ul>
+        return(
+            <ul className="task-experiences">
+                {experiences.map((experience) => (
+                    <li key={experience.experienceID}>
+                        <ExperienceArea companyName={experience.companyName} roleTitle={experience.roleTitle}>
+                            <TaskAreaList tasks={experience.tasks} />
+                            {experience.openTaskCount > experience.tasks.length && (
+                                <Link className="task-experience__more" to="/experiencemanager">
+                                    { experience.openTaskCount - experience.tasks.length } more open tasks
+                                </Link>
+                            )}
+                        </ExperienceArea>
+                    </li>
+                ))}
+            </ul>
+        );
     }
 
     if(variant === "full"){
