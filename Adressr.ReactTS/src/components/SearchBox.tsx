@@ -28,7 +28,8 @@ export function SearchBox() {
 
     const term = useDebounced(text.trim(), 250);
     const active = term.length >= MIN_LENGTH;
-    const query = usePublicGet<SearchResult[]>(active ? `/api/search?query=${encodeURIComponent(term)}` : null);
+    const showResults = open && active;
+    const query = usePublicGet<SearchResult[]>(showResults ? `/api/search?query=${encodeURIComponent(term)}` : null);
 
     const close = () => {
         setOpen(false);
@@ -61,8 +62,6 @@ export function SearchBox() {
             </ul>
         );
     }
-
-    const showResults = open && active;
 
     return(
         <div className="search"

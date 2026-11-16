@@ -24,7 +24,7 @@ namespace Adressr.Service
             return fields.Min(field => field.Equals(term, StringComparison.OrdinalIgnoreCase) ? 0 : field.StartsWith(term, StringComparison.OrdinalIgnoreCase) ? 1 : 2);
         }
 
-        public async Task<List<SearchResultResponse>> SearchAsync(string searchTerm)
+        public async Task<List<SearchResultResponse>> SearchAsync(string searchTerm, CancellationToken cancellationToken)
         {
             string term = searchTerm.Trim();
             if(term.Length < MinTermLength)
@@ -32,8 +32,8 @@ namespace Adressr.Service
                 return [];
             }
 
-            List<UserSearchHit> usersFound = await _profileRepository.SearchUsersAsync(term, MaxResults);
-            List<CompanySearchHit> companiesFound = await _companyRepository.SearchCompanyAsync(term, MaxResults);
+            List<UserSearchHit> usersFound = await _profileRepository.SearchUsersAsync(term, MaxResults, cancellationToken);
+            List<CompanySearchHit> companiesFound = await _companyRepository.SearchCompanyAsync(term, MaxResults, cancellationToken);
 
             IEnumerable<(int Rank, SearchResultResponse Result)> userHits = usersFound.Select(user => (
                 Rank: MatchRank(term, user.Name),

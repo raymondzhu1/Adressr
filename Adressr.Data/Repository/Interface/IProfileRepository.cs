@@ -9,6 +9,6 @@ namespace Adressr.Data.Repository.Interface
         Task UpdateProfileAsync(Profile profile);
         Task<Profile?> GetByUserIdAsync(int userId);
         Task<Profile?> GetByUsernameAsync(string username);
-        Task<List<UserSearchHit>> SearchUsersAsync(string term, int limit);
+        Task<List<UserSearchHit>> SearchUsersAsync(string term, int limit, CancellationToken cancellationToken);
     }
 }

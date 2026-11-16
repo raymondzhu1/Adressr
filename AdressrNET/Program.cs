@@ -25,7 +25,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(CorsPolicies.Frontend, policy =>
     {
         //policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
-        policy.WithOrigins(allowedOrigins).WithHeaders("Content-Type", "Authorization").WithMethods("GET", "POST", "PUT", "DELETE").SetPreflightMaxAge(TimeSpan.FromHours(1));
+        policy.WithOrigins(allowedOrigins).WithHeaders("Content-Type", "Authorization").WithMethods("GET", "POST", "PUT", "PATCH", "DELETE").SetPreflightMaxAge(TimeSpan.FromHours(1));
     });
 });
 

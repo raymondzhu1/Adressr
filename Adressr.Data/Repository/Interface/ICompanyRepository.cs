@@ -9,6 +9,6 @@ namespace Adressr.Data.Repository.Interface
         Task<Company?> GetCompanyByIdAsync(int CompanyID);
         Task<List<Company>> GetByCreatorIdAsync(int creatorId);
         Task<int> GetCreatorIdAsync(int companyId);
-        Task<List<CompanySearchHit>> SearchCompanyAsync(string term, int limit);
+        Task<List<CompanySearchHit>> SearchCompanyAsync(string term, int limit, CancellationToken cancellationToken);
     }
 }

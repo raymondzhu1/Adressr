@@ -17,9 +17,9 @@ namespace AdressrNET.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<SearchResultResponse>>> Search([FromQuery, MinLength(1), MaxLength(50)] string query)
+        public async Task<ActionResult<List<SearchResultResponse>>> Search([FromQuery, MinLength(1), MaxLength(50)] string query, CancellationToken cancellationToken)
         {
-            List<SearchResultResponse> results = await _searchService.SearchAsync(query);
+            List<SearchResultResponse> results = await _searchService.SearchAsync(query, cancellationToken);
             return results;
         }
     }

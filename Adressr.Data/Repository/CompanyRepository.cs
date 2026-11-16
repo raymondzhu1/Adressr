@@ -36,17 +36,17 @@ namespace Adressr.Data.Repository
             return _context.Companies.AsNoTracking().Where(company => company.CompanyID == companyId).Select(company => company.CreatorID).FirstOrDefaultAsync();
         }
 
-        public async Task<List<CompanySearchHit>> SearchCompanyAsync(string term, int limit)
+        public async Task<List<CompanySearchHit>> SearchCompanyAsync(string term, int limit, CancellationToken cancellationToken)
         {
             IQueryable<Company> companies = _context.Companies.AsNoTracking();
 
-            List<CompanySearchHit> startsWithHits = await companies.Where(company => company.Name.StartsWith(term)).OrderBy(company => company.Name).Select(company => new CompanySearchHit(company.CompanyID, company.Name, company.CompanyIconImageLocation)).Take(limit).ToListAsync();
+            List<CompanySearchHit> startsWithHits = await companies.Where(company => company.Name.StartsWith(term)).OrderBy(company => company.Name).Select(company => new CompanySearchHit(company.CompanyID, company.Name, company.CompanyIconImageLocation)).Take(limit).ToListAsync(cancellationToken);
             if(startsWithHits.Count >= limit)
             {
                 return startsWithHits;
             }
 
-            List<CompanySearchHit> containsHits = await companies.Where(company => company.Name.Contains(term) && !company.Name.StartsWith(term)).OrderBy(company => company.Name).Select(company => new CompanySearchHit(company.CompanyID, company.Name, company.CompanyIconImageLocation)).Take(limit - startsWithHits.Count).ToListAsync();
+            List<CompanySearchHit> containsHits = await companies.Where(company => company.Name.Contains(term) && !company.Name.StartsWith(term)).OrderBy(company => company.Name).Select(company => new CompanySearchHit(company.CompanyID, company.Name, company.CompanyIconImageLocation)).Take(limit - startsWithHits.Count).ToListAsync(cancellationToken);
 
             startsWithHits.AddRange(containsHits);
             return startsWithHits;

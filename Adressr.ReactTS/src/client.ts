@@ -62,6 +62,16 @@ export const get = <TResponse>(path: string, token?: string, signal?: AbortSigna
         signal
     }, token);
 
+export const put = <TResponse>(path: string, payload: unknown, token: string, signal?: AbortSignal) => 
+    request<TResponse>(path, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload),
+        signal
+    }, token);
+
 // export const anonymousGet = <TResponse>(path: string) => 
 //     request<TResponse>(path, {
 //         method: "GET",
