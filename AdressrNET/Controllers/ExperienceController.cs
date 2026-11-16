@@ -19,9 +19,9 @@ namespace AdressrNET.Controllers
         }
 
         [HttpGet("experiencemanager")]
-        public async Task<ActionResult<List<ExperienceResponse>>> GetExperiences()
+        public async Task<ActionResult<List<ExperienceResponse>>> GetExperiences(CancellationToken cancellationToken)
         {
-            List<ExperienceResponse> response = await _experienceService.GetExperiencesForManager(User.GetUserId());
+            List<ExperienceResponse> response = await _experienceService.GetExperiencesForManager(User.GetUserId(), cancellationToken);
             return response;
         }
 

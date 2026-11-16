@@ -18,9 +18,9 @@ namespace Adressr.Service
             _workTaskRepository = workTaskRepository;
         }
 
-        public async Task<List<DashboardExpTaskResponse>> GetOpenTasksForUserAsync(int userId)
+        public async Task<List<DashboardExpTaskResponse>> GetOpenTasksForUserAsync(int userId, CancellationToken cancellationToken)
         {
-            List<Experience> experiences = await _experienceRepository.GetCurrentExperiencseByUserIdAsync(userId);
+            List<Experience> experiences = await _experienceRepository.GetCurrentExperiencseByUserIdAsync(userId, cancellationToken);
             if (experiences.Count == 0)
             {
                 //This section implies the user to be working somewhere, or more technically that they need to have an experience before having tasks.
@@ -29,7 +29,7 @@ namespace Adressr.Service
             }
 
             List<int> experienceIds = experiences.Select(exp => exp.ExperienceID).ToList();
-            List<WorkTask> tasks = await _workTaskRepository.GetTaskByExperienceIdsAsync(experienceIds);
+            List<WorkTask> tasks = await _workTaskRepository.GetTaskByExperienceIdsAsync(experienceIds, cancellationToken);
             ILookup<int, WorkTask> lookupTaskByExpID = tasks.ToLookup(task => task.ExperienceID);
 
             return experiences.Select(exp =>

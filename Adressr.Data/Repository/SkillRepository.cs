@@ -33,13 +33,13 @@ namespace Adressr.Data.Repository
             return _context.Skills.SingleOrDefaultAsync(skill => skill.Name == name);
         }
 
-        public async Task<ILookup<int, Skill>> GetSkillsByExperienceIdsAsync(IReadOnlyCollection<int> readOnlyExperienceIds)
+        public async Task<ILookup<int, Skill>> GetSkillsByExperienceIdsAsync(IReadOnlyCollection<int> readOnlyExperienceIds, CancellationToken cancellationToken)
         {
             //Lookup makes things easier here so that we can accumulate many of the same experience into an index without sorting through it ourselves.
             //ToLookup handles it for us and just returns the Lookup object since multiple entries can be in the same key vs a dictionary.
 
             var rows = await _context.Skills.AsNoTracking().SelectMany(skill => skill.Experiences.Where(exp => readOnlyExperienceIds.Contains(exp.ExperienceID)),
-                                                                      (skill, exp) => new {exp.ExperienceID, Skill=skill}).ToListAsync();
+                                                                      (skill, exp) => new {exp.ExperienceID, Skill=skill}).ToListAsync(cancellationToken);
 
             return rows.ToLookup(row => row.ExperienceID, row => row.Skill);
         }

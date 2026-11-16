@@ -45,7 +45,7 @@ namespace Adressr.Service
             };
         }
 
-        private async Task<List<ExperienceResponse>> BuildResponseAsync(List<Experience> experiences)
+        private async Task<List<ExperienceResponse>> BuildResponseAsync(List<Experience> experiences, CancellationToken cancellationToken)
         {
             if(experiences.Count == 0)
             {
@@ -53,8 +53,8 @@ namespace Adressr.Service
             }
 
             List<int> experienceIds = experiences.Select(exp => exp.ExperienceID).ToList();
-            ILookup<int, Skill> skillsByExperience = await _skillRepository.GetSkillsByExperienceIdsAsync(experienceIds);
-            List<WorkTask> tasks = await _workTaskRepository.GetTaskByExperienceIdsAsync(experienceIds);
+            ILookup<int, Skill> skillsByExperience = await _skillRepository.GetSkillsByExperienceIdsAsync(experienceIds, cancellationToken);
+            List<WorkTask> tasks = await _workTaskRepository.GetTaskByExperienceIdsAsync(experienceIds, cancellationToken);
             ILookup<int, WorkTask> tasksByExperience = tasks.ToLookup(task => task.ExperienceID);
 
             List<ExperienceResponse> result = experiences.Select(exp =>
@@ -94,16 +94,16 @@ namespace Adressr.Service
             };
         }
 
-        public async Task<List<ExperienceResponse>> GetExperiencesExportedByProfileIdAsync(int profileId)
+        public async Task<List<ExperienceResponse>> GetExperiencesExportedByProfileIdAsync(int profileId, CancellationToken cancellationToken)
         {
-            List<Experience> experiences = await _experienceRepository.GetExportedByProfileIdAsync(profileId);
-            return await BuildResponseAsync(experiences);
+            List<Experience> experiences = await _experienceRepository.GetExportedByProfileIdAsync(profileId, cancellationToken);
+            return await BuildResponseAsync(experiences, cancellationToken);
         }
 
-        public async Task<List<ExperienceResponse>> GetExperiencesForManager(int userId)
+        public async Task<List<ExperienceResponse>> GetExperiencesForManager(int userId, CancellationToken cancellationToken)
         {
-            List<Experience> results = await _experienceRepository.GetAllExperienceByUserIdAsync(userId);
-            return await BuildResponseAsync(results);
+            List<Experience> results = await _experienceRepository.GetAllExperienceByUserIdAsync(userId, cancellationToken);
+            return await BuildResponseAsync(results, cancellationToken);
         }
 
         public async Task<ExperienceResponse> AddExperienceAsync(int userId, CreateExperienceRequest request)
@@ -172,7 +172,7 @@ namespace Adressr.Service
 
             await _experienceRepository.AddAsync(experience);
             await _repositorySaver.SaveChangesAsync();
-            return (await BuildResponseAsync([experience]))[0]; //BuildResponseAsync creates a list, but we just need one entry which is the first one.
+            return (await BuildResponseAsync([experience], CancellationToken.None))[0]; //BuildResponseAsync creates a list, but we just need one entry which is the first one.
         }
     }
 }

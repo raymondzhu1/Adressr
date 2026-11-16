@@ -13,9 +13,9 @@ namespace Adressr.Data.Repository
             _context = context;
         }
 
-        public Task<List<ProfileInterest>> GetInterestsByProfileIdAsync(int profileId)
+        public Task<List<ProfileInterest>> GetInterestsByProfileIdAsync(int profileId, CancellationToken cancellationToken)
         {
-            return _context.ProfileInterests.AsNoTracking().Where(interest => interest.ProfileID == profileId).OrderByDescending(interest => interest.CreatedDate).ToListAsync();
+            return _context.ProfileInterests.AsNoTracking().Where(interest => interest.ProfileID == profileId).OrderByDescending(interest => interest.CreatedDate).ToListAsync(cancellationToken);
         }
     }
 }

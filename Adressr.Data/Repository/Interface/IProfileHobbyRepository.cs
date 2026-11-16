@@ -4,6 +4,6 @@ namespace Adressr.Data.Repository.Interface
 {
     public interface IProfileHobbyRepository
     {
-        Task<List<ProfileHobby>> GetHobbiesByProfileIdAsync(int profileId);
+        Task<List<ProfileHobby>> GetHobbiesByProfileIdAsync(int profileId, CancellationToken cancellationToken);
     }
 }

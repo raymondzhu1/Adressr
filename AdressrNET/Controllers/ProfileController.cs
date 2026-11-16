@@ -20,11 +20,11 @@ namespace AdressrNET.Controllers
 
         [HttpGet("{username}")]
         [AllowAnonymous]
-        public async Task<ActionResult<ProfileResponse>> GetProfile(string username)
+        public async Task<ActionResult<ProfileResponse>> GetProfile(string username, CancellationToken cancellationToken)
         {
             int? viewerUserId = User.Identity?.IsAuthenticated == true ? User.GetUserId() : null;
 
-            ProfileResponse? profile = await _profileService.GetByUsernameAsync(username, viewerUserId);
+            ProfileResponse? profile = await _profileService.GetByUsernameAsync(username, viewerUserId, cancellationToken);
             if(profile is null)
             {
                 return NotFound();

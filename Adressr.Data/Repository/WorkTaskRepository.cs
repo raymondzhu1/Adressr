@@ -26,9 +26,9 @@ namespace Adressr.Data.Repository
             return Task.CompletedTask;
         }
 
-        public Task<List<WorkTask>> GetTaskByExperienceIdsAsync(IReadOnlyCollection<int> readOnlyExperienceIds)
+        public Task<List<WorkTask>> GetTaskByExperienceIdsAsync(IReadOnlyCollection<int> readOnlyExperienceIds, CancellationToken cancellationToken)
         {
-            return _context.Tasks.AsNoTracking().Where(task => readOnlyExperienceIds.Contains(task.ExperienceID)).ToListAsync();
+            return _context.Tasks.AsNoTracking().Where(task => readOnlyExperienceIds.Contains(task.ExperienceID)).ToListAsync(cancellationToken);
         }
     }
 }

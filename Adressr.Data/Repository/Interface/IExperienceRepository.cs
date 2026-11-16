@@ -13,28 +13,37 @@ namespace Adressr.Data.Repository.Interface
         /// <param name="profileId">
         /// A user's profile ID for their publically displayed profile.
         /// </param>
+        /// <param name="cancellationToken">
+        /// The cancellation token used in case a user cancels the request midway through the request.
+        /// </param>
         /// <returns>
         /// A list of experiences corresponding to the profile id given.
         /// </returns>
-        Task<List<Experience>> GetExportedByProfileIdAsync(int profileId);
+        Task<List<Experience>> GetExportedByProfileIdAsync(int profileId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets the list of experiences associated with the user of this user ID.
         /// </summary>
         /// <param name="userId">The User ID to search experiences for.</param>
+        /// <param name="cancellationToken">
+        /// The cancellation token used in case a user cancels the request midway through the request.
+        /// </param>
         /// <returns>
         /// List of current experiences associated with a specific user ID.
         /// </returns>
-        Task<List<Experience>> GetCurrentExperiencseByUserIdAsync(int userId);
+        Task<List<Experience>> GetCurrentExperiencseByUserIdAsync(int userId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets all of the experiences of the user given.
         /// </summary>
         /// <param name="userId">The User ID to search experiences for.</param>
+        /// <param name="cancellationToken">
+        /// The cancellation token used in case a user cancels the request midway through the request.
+        /// </param>
         /// <returns>
         /// List of experiences associated with this specific user ID.
         /// </returns>
-        Task<List<Experience>> GetAllExperienceByUserIdAsync(int userId);
+        Task<List<Experience>> GetAllExperienceByUserIdAsync(int userId, CancellationToken cancellationToken);
 
         /// <summary>
         /// Adds the given Experience to the DB.

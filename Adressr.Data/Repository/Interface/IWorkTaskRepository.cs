@@ -6,6 +6,6 @@ namespace Adressr.Data.Repository.Interface
     {
         Task AddAsync(WorkTask task);
         Task AddLaterAsync(WorkTask task);
-        Task<List<WorkTask>> GetTaskByExperienceIdsAsync(IReadOnlyCollection<int> readOnlyExperienceIds);
+        Task<List<WorkTask>> GetTaskByExperienceIdsAsync(IReadOnlyCollection<int> readOnlyExperienceIds, CancellationToken cancellationToken);
     }
 }

@@ -21,9 +21,9 @@ namespace Adressr.Service
             _experienceService = experienceService;
         }
 
-        public async Task<ProfileResponse?> GetByUsernameAsync(string username, int? viewerUserId)
+        public async Task<ProfileResponse?> GetByUsernameAsync(string username, int? viewerUserId, CancellationToken cancellationToken)
         {
-            Profile? profile = await _profileRepository.GetByUsernameAsync(username);
+            Profile? profile = await _profileRepository.GetByUsernameAsync(username, cancellationToken);
             if(profile is null)
             {
                 return null;
@@ -36,9 +36,9 @@ namespace Adressr.Service
                 return null;
             }
 
-            List<ExperienceResponse> experiences = await _experienceService.GetExperiencesExportedByProfileIdAsync(profile.ProfileID);
-            List<ProfileInterest> interests = await _profileInterestRepository.GetInterestsByProfileIdAsync(profile.ProfileID);
-            List<ProfileHobby> hobbies = await _profileHobbyRepository.GetHobbiesByProfileIdAsync(profile.ProfileID);
+            List<ExperienceResponse> experiences = await _experienceService.GetExperiencesExportedByProfileIdAsync(profile.ProfileID, cancellationToken);
+            List<ProfileInterest> interests = await _profileInterestRepository.GetInterestsByProfileIdAsync(profile.ProfileID, cancellationToken);
+            List<ProfileHobby> hobbies = await _profileHobbyRepository.GetHobbiesByProfileIdAsync(profile.ProfileID, cancellationToken);
 
             ProfileResponse result = new ProfileResponse
             {

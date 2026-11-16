@@ -32,9 +32,9 @@ namespace Adressr.Data.Repository
             return _context.Profiles.SingleOrDefaultAsync(profile => profile.UserID == userId);
         }
 
-        public Task<Profile?> GetByUsernameAsync(string username)
+        public Task<Profile?> GetByUsernameAsync(string username, CancellationToken cancellationToken)
         {
-            return _context.Profiles.AsNoTracking().Include(profile => profile.User).ThenInclude(user => user.Preference).SingleOrDefaultAsync(profile => profile.User.Username == username);
+            return _context.Profiles.AsNoTracking().Include(profile => profile.User).ThenInclude(user => user.Preference).SingleOrDefaultAsync(profile => profile.User.Username == username, cancellationToken);
         }
 
         public async Task<List<UserSearchHit>> SearchUsersAsync(string term, int limit, CancellationToken cancellationToken)

@@ -37,10 +37,13 @@ namespace Adressr.Data.Repository.Interface
         /// <param name="readOnlyExperienceIds">
         /// The readonly collection of experience IDs associated with the experiences you're looking for the skills for.
         /// </param>
+        /// <param name="cancellationToken">
+        /// The cancellation token used for when users cancel the requests midway through processing the GET.
+        /// </param>
         /// <returns>
         /// An ILookup object that relates the experience ID with the associated skills.
         /// ILookup is immutable here and throws no error when using a key that doesn't exist.
         /// </returns>
-        Task<ILookup<int, Skill>> GetSkillsByExperienceIdsAsync(IReadOnlyCollection<int> readOnlyExperienceIds);
+        Task<ILookup<int, Skill>> GetSkillsByExperienceIdsAsync(IReadOnlyCollection<int> readOnlyExperienceIds, CancellationToken cancellationToken);
     }
 }

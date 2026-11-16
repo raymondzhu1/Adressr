@@ -4,6 +4,6 @@ namespace Adressr.Data.Repository.Interface
 {
     public interface IProfileInterestRepository
     {
-        Task<List<ProfileInterest>> GetInterestsByProfileIdAsync(int profileId);
+        Task<List<ProfileInterest>> GetInterestsByProfileIdAsync(int profileId, CancellationToken cancellationToken);
     }
 }

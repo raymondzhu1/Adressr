@@ -4,6 +4,6 @@ namespace Adressr.Service.Interface
 {
     public interface IWorkTaskService
     {
-        Task<List<DashboardExpTaskResponse>> GetOpenTasksForUserAsync(int userId);
+        Task<List<DashboardExpTaskResponse>> GetOpenTasksForUserAsync(int userId, CancellationToken cancellationToken);
     }
 }

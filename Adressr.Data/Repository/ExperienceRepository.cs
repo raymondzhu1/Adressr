@@ -21,20 +21,20 @@ namespace Adressr.Data.Repository
             return;
         }
 
-        public Task<List<Experience>> GetExportedByProfileIdAsync(int profileId)
+        public Task<List<Experience>> GetExportedByProfileIdAsync(int profileId, CancellationToken cancellationToken)
         {
-            return _context.Experiences.AsNoTracking().Where(exp => exp.ProfileID == profileId && exp.IsExported).OrderByDescending(exp => exp.StartDate).ToListAsync();
+            return _context.Experiences.AsNoTracking().Where(exp => exp.ProfileID == profileId && exp.IsExported).OrderByDescending(exp => exp.StartDate).ToListAsync(cancellationToken);
         }
 
-        public Task<List<Experience>> GetCurrentExperiencseByUserIdAsync(int userId)
+        public Task<List<Experience>> GetCurrentExperiencseByUserIdAsync(int userId, CancellationToken cancellationToken)
         {
-            return _context.Experiences.AsNoTracking().Where(exp => exp.Profile.UserID == userId && exp.EndDate == null).OrderByDescending(exp => exp.StartDate).ToListAsync();
+            return _context.Experiences.AsNoTracking().Where(exp => exp.Profile.UserID == userId && exp.EndDate == null).OrderByDescending(exp => exp.StartDate).ToListAsync(cancellationToken);
         }
 
-        public Task<List<Experience>> GetAllExperienceByUserIdAsync(int userId)
+        public Task<List<Experience>> GetAllExperienceByUserIdAsync(int userId, CancellationToken cancellationToken)
         {
             //Could've probably done some kind of factory design pattern with GetCurrentExperiences, but I'll just throw this in for now.
-            return _context.Experiences.AsNoTracking().Where(exp => exp.Profile.UserID == userId).OrderByDescending(exp => exp.StartDate).ToListAsync();
+            return _context.Experiences.AsNoTracking().Where(exp => exp.Profile.UserID == userId).OrderByDescending(exp => exp.StartDate).ToListAsync(cancellationToken);
         }
 
         public async Task<Experience?> UpdateGeneralAsync(Experience experience)

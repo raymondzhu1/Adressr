@@ -19,9 +19,9 @@ namespace AdressrNET.Controllers
         }
 
         [HttpGet("dashboard")]
-        public async Task<List<DashboardExpTaskResponse>> DashboardGetTasks()
+        public async Task<List<DashboardExpTaskResponse>> DashboardGetTasks(CancellationToken cancellationToken)
         {
-            List<DashboardExpTaskResponse> response = await _workTaskService.GetOpenTasksForUserAsync(User.GetUserId());
+            List<DashboardExpTaskResponse> response = await _workTaskService.GetOpenTasksForUserAsync(User.GetUserId(), cancellationToken);
             return response;
         }
     }
